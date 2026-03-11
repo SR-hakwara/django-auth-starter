@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Invalid Activation Link" %} — django-auth-basic{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-10rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md">
+        <div class="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/50 border border-white/80 p-8 text-center space-y-6">
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-lg shadow-red-500/30">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-900">{% trans "Invalid link" %}</h1>
+            <p class="text-sm text-slate-500">
+                {% trans "This activation link is invalid or has expired. Please register again or contact support." %}
+            </p>
+            <div class="flex items-center justify-center gap-3">
+                <a href="{% url 'authentication:register' %}"
+                   class="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 rounded-xl shadow-lg shadow-primary-500/30 transition-all duration-300">
+                    {% trans "Register again" %}
+                </a>
+                <a href="{% url 'authentication:login' %}"
+                   class="px-6 py-3 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all duration-200">
+                    {% trans "Login" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

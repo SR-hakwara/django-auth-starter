@@ -1,0 +1,63 @@
+/* ==========================================================================
+   django-auth-basic — Custom Styles
+   Complements TailwindCSS CDN for the auth starter kit.
+   ========================================================================== */
+
+/* ---- Smooth scrolling ---- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---- Selection color ---- */
+::selection {
+    background-color: rgba(99, 102, 241, 0.15);
+    color: #312e81;
+}
+
+/* ---- Focus ring for accessibility ---- */
+:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ---- Input transition for all form fields ---- */
+input,
+select,
+textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ---- Custom scrollbar (webkit) ---- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ---- Subtle page-load animation ---- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main {
+    animation: fadeInUp 0.4s ease-out;
+}
