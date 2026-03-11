@@ -1,9 +1,13 @@
 """Business logic layer for the authentication app."""
 
+from typing import cast
+
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 
 from apps.emails.services import send_activation_email
+
+from django.contrib.auth.models import UserManager
 
 User = get_user_model()
 
@@ -34,7 +38,8 @@ def register_user(
     """
     Register a new user and send an activation email.
     """
-    user = User.objects.create_user(
+    usermanager = cast(UserManager, User.objects)
+    user = usermanager.create_user(
         username=username,
         email=email,
         password=password,

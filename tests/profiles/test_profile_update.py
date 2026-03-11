@@ -1,5 +1,7 @@
 import pytest
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 
 @pytest.mark.django_db
@@ -52,6 +54,91 @@ def test_profile_update_username(client, user):
     assert response.status_code == 302
     user.refresh_from_db()
     assert user.username == "newprofilename"
+
+
+@pytest.mark.django_db
+
+def test_profile_update_avatar_with_lock(monkeypatch, client, user):
+    """If deleting the existing avatar raises ``PermissionError`` we should
+    still allow the update (Windows can lock media files).
+    """
+    client.login(username=user.username, password="SecurePass123!")
+    # give the user an initial avatar file; the contents are not
+    # important, we just need something the ImageField can reference.
+    from io import BytesIO
+    from PIL import Image
+
+    buf = BytesIO()
+    Image.new("RGB", (1, 1)).save(buf, format="PNG")
+    buf.seek(0)
+    user.avatar.save("old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png"))
+    user.save()
+
+    # simulate a locked file error when attempting to delete the old avatar
+    def locked_delete(self, save=False):
+        raise PermissionError("locked")
+
+    # patch FieldFile.delete so that any attempt to remove a file raises
+    from django.db.models.fields.files import FieldFile
+
+    monkeypatch.setattr(FieldFile, "delete", locked_delete, raising=False)
+
+    # create another tiny valid image for the upload
+    buf = BytesIO()
+    Image.new("RGB", (1, 1)).save(buf, format="PNG")
+    buf.seek(0)
+    old_name = user.avatar.name
+    response = client.post(
+        reverse("profiles:profile_update"),
+        {
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            # Django test client requires ``format="multipart"`` for files
+            "avatar": SimpleUploadedFile("new.png", buf.read(), content_type="image/png"),
+        },
+        format="multipart",
+    )
+    assert response.status_code == 302
+    user.refresh_from_db()
+    # the file name should change when a new avatar is uploaded
+    assert user.avatar.name != old_name
+
+
+@pytest.mark.django_db
+
+def test_profile_remove_avatar_with_lock(monkeypatch, client, user):
+    """Removing an avatar should not crash even if the file is locked."""
+    client.login(username=user.username, password="SecurePass123!")
+    from io import BytesIO
+    from PIL import Image
+
+    buf = BytesIO()
+    Image.new("RGB", (1, 1)).save(buf, format="PNG")
+    buf.seek(0)
+    user.avatar.save("old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png"))
+    user.save()
+
+    def locked_delete(self, save=False):
+        raise PermissionError("locked")
+
+    from django.db.models.fields.files import FieldFile
+    monkeypatch.setattr(FieldFile, "delete", locked_delete, raising=False)
+
+    response = client.post(
+        reverse("profiles:profile_update"),
+        {
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "remove_avatar": "true",
+        },
+    )
+    assert response.status_code == 302
+    user.refresh_from_db()
+    assert not user.avatar
 
 
 @pytest.mark.django_db

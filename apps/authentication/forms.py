@@ -1,5 +1,7 @@
 """Forms for the authentication app."""
 
+from typing import Optional
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
@@ -97,7 +99,7 @@ class RegisterForm(forms.ModelForm):
             ),
         }
 
-    def clean_password2(self) -> str:
+    def clean_password2(self) -> Optional[str]:
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:

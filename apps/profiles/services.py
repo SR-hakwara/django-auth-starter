@@ -1,6 +1,9 @@
 """Business logic layer for the profiles app."""
 
 from django.core.files.uploadedfile import UploadedFile
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def update_profile(
@@ -35,14 +38,36 @@ def update_profile(
         user.is_email_verified = False
         update_fields.extend(["email", "is_email_verified"])
 
+    def _safe_delete(fieldfile):
+        """Attempt to delete a FieldFile while ignoring locks on Windows.
+
+        On Windows a file may be temporarily locked by another process
+        (antivirus, image viewer, the Django dev server, etc.). A
+        ``PermissionError`` raised during deletion would normally bubble up
+        and crash the view. We swallow that error and log a warning so the
+        profile update can continue. The DB value is still cleared to
+        prevent broken references.
+        """
+
+        try:
+            fieldfile.delete(save=False)
+        except PermissionError as exc:  # pragma: no cover - hard to force on CI
+            # Windows-specific issue where the file handle is held by another
+            # process; see GH#...
+            logger.warning(
+                "Permission denied while deleting avatar %s: %s",
+                getattr(fieldfile, "name", "<unknown>"),
+                exc,
+            )
+
     if remove_avatar and user.avatar:
-        user.avatar.delete(save=False)
+        _safe_delete(user.avatar)
         user.avatar = None
         update_fields.append("avatar")
     elif avatar:
         # Delete old avatar if exists
         if user.avatar:
-            user.avatar.delete(save=False)
+            _safe_delete(user.avatar)
         user.avatar = avatar
         update_fields.append("avatar")
 
