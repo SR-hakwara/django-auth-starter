@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from apps.authentication.tokens import email_verification_token
 
+
 def send_activation_email(*, user, request: HttpRequest) -> None:
     """
     Send an email with an activation link to the user.
@@ -27,12 +28,8 @@ def send_activation_email(*, user, request: HttpRequest) -> None:
         "token": token,
     }
 
-    subject = render_to_string(
-        "emails/activation_subject.txt", context
-    ).strip()
-    message = render_to_string(
-        "emails/activation_email.html", context
-    )
+    subject = render_to_string("emails/activation_subject.txt", context).strip()
+    message = render_to_string("emails/activation_email.html", context)
 
     send_mail(
         subject=subject,
@@ -41,6 +38,7 @@ def send_activation_email(*, user, request: HttpRequest) -> None:
         recipient_list=[user.email],
         html_message=message,
     )
+
 
 def send_password_reset_email(*, user, request: HttpRequest) -> None:
     """
@@ -58,12 +56,8 @@ def send_password_reset_email(*, user, request: HttpRequest) -> None:
         "token": token,
     }
 
-    subject = render_to_string(
-        "emails/password_reset_subject.txt", context
-    ).strip()
-    message = render_to_string(
-        "emails/password_reset_email.html", context
-    )
+    subject = render_to_string("emails/password_reset_subject.txt", context).strip()
+    message = render_to_string("emails/password_reset_email.html", context)
 
     send_mail(
         subject=subject,

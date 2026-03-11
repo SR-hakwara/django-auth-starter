@@ -4,28 +4,45 @@ from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpRequest
 
-# Rate Limiting Helpers moved from views.py
 
-def get_rate_limit_key(request: HttpRequest) -> str:
-    """Build a cache key for login rate limiting based on IP."""
+def get_rate_limit_key(request: HttpRequest, key_prefix: str = "login_attempts") -> str:
+    """Build a cache key for rate limiting based on IP and an optional prefix."""
     ip = request.META.get("REMOTE_ADDR", "unknown")
-    return f"login_attempts_{ip}"
+    return f"{key_prefix}_{ip}"
 
-def is_rate_limited(request: HttpRequest) -> bool:
-    """Check if the current IP has exceeded login attempts."""
-    key = get_rate_limit_key(request)
+
+def is_rate_limited(request: HttpRequest, key_prefix: str = "login_attempts") -> bool:
+    """Check if the current IP has exceeded the allowed number of attempts."""
+    key = get_rate_limit_key(request, key_prefix)
     attempts = cache.get(key, 0)
     max_attempts = getattr(settings, "LOGIN_RATE_LIMIT_MAX_ATTEMPTS", 5)
     return attempts >= max_attempts
 
-def record_failed_attempt(request: HttpRequest) -> None:
-    """Increment failed login counter for this IP."""
-    key = get_rate_limit_key(request)
-    timeout = getattr(settings, "LOGIN_RATE_LIMIT_TIMEOUT", 300)
-    attempts = cache.get(key, 0)
-    cache.set(key, attempts + 1, timeout)
 
-def clear_failed_attempts(request: HttpRequest) -> None:
-    """Clear failed login counter on successful login."""
-    key = get_rate_limit_key(request)
+def record_failed_attempt(
+    request: HttpRequest, key_prefix: str = "login_attempts"
+) -> None:
+    """Atomically increment the failed attempt counter for this IP.
+
+    Uses cache.add() + cache.incr() to avoid the read-then-write race condition
+    that would occur with cache.get() + cache.set().
+    """
+    key = get_rate_limit_key(request, key_prefix)
+    timeout = getattr(settings, "LOGIN_RATE_LIMIT_TIMEOUT", 300)
+    # add() only sets the key if it does not already exist (atomic).
+    # Initial value is 1 so the first call already counts as one attempt.
+    added = cache.add(key, 1, timeout)
+    if not added:
+        try:
+            cache.incr(key)
+        except ValueError:
+            # Key expired between add() check and incr() — start fresh.
+            cache.add(key, 1, timeout)
+
+
+def clear_failed_attempts(
+    request: HttpRequest, key_prefix: str = "login_attempts"
+) -> None:
+    """Clear the failed attempt counter on successful action."""
+    key = get_rate_limit_key(request, key_prefix)
     cache.delete(key)

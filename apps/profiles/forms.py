@@ -5,14 +5,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm as DjangoPasswordChangeForm
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.constants import INPUT_CSS
+from apps.core.validators import validate_avatar
+
 User = get_user_model()
 
-# Shared CSS class for TailwindCSS form inputs
-INPUT_CSS = (
-    "w-full px-4 py-3 rounded-lg border border-gray-300 "
-    "focus:ring-2 focus:ring-indigo-500 focus:border-transparent "
-    "transition duration-200"
-)
 
 class ProfileUpdateForm(forms.ModelForm):
     """Form for updating user profile: name, email, and avatar."""
@@ -36,7 +33,16 @@ class ProfileUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["email"].help_text = _("Changing your email will require re-verification.")
+        self.fields["email"].help_text = _(
+            "Changing your email will require re-verification."
+        )
+
+    def clean_avatar(self):
+        """Validate avatar file size and type."""
+        avatar = self.cleaned_data.get("avatar")
+        if avatar and hasattr(avatar, "size"):
+            validate_avatar(avatar)
+        return avatar
 
     def clean_email(self) -> str:
         """Validate email uniqueness excluding current user."""
@@ -60,8 +66,10 @@ class ProfileUpdateForm(forms.ModelForm):
             )
         return username
 
+
 class PasswordChangeForm(DjangoPasswordChangeForm):
     """Styled password change form."""
+
     old_password = forms.CharField(
         label=_("Current password"),
         widget=forms.PasswordInput(

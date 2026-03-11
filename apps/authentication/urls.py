@@ -18,9 +18,14 @@ urlpatterns = [
         views.activate_account_view,
         name="activate",
     ),
+    path("resend-activation/", views.resend_activation_view, name="resend_activation"),
     # Password Reset
     path("password-reset/", views.password_reset_request_view, name="password_reset"),
-    path("password-reset/done/", views.password_reset_done_view, name="password_reset_done"),
+    path(
+        "password-reset/done/",
+        views.password_reset_done_view,
+        name="password_reset_done",
+    ),
     path(
         "password-reset-confirm/<uidb64>/<token>/",
         views.password_reset_confirm_view,

@@ -5,7 +5,6 @@ Common settings shared across all environments.
 Uses django-environ for environment variable management.
 """
 
-import os
 from pathlib import Path
 
 import environ
@@ -28,7 +27,7 @@ if env_file.exists():
 # ---------------------------------------------------------------------------
 # Core Settings
 # ---------------------------------------------------------------------------
-SECRET_KEY: str = env("DJANGO_SECRET_KEY", default="change-me-in-production")
+SECRET_KEY: str = env("DJANGO_SECRET_KEY")
 
 DEBUG: bool = env("DJANGO_DEBUG")
 
@@ -136,8 +135,13 @@ LOGOUT_REDIRECT_URL = "/auth/login/"
 # Password Validation
 # ---------------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", "OPTIONS": {"min_length": 10}},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 10},
+    },
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
@@ -190,9 +194,17 @@ EMAIL_BACKEND = env(
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@example.com")
 
 # ---------------------------------------------------------------------------
+# Cache (default: LocMemCache — overridden per environment)
+# ---------------------------------------------------------------------------
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
+# ---------------------------------------------------------------------------
 # Security Defaults
 # ---------------------------------------------------------------------------
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 
@@ -206,4 +218,43 @@ LOGIN_RATE_LIMIT_TIMEOUT: int = 300  # seconds (5 minutes)
 # ---------------------------------------------------------------------------
 # Email Token Expiration
 # ---------------------------------------------------------------------------
-EMAIL_TOKEN_EXPIRY_HOURS: int = 24
+# Controls how long password-reset AND email-activation tokens remain valid.
+# Django's built-in PasswordResetTokenGenerator respects this setting.
+PASSWORD_RESET_TIMEOUT: int = 86400  # 24 hours (in seconds)
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "apps.authentication": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "apps.profiles": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}

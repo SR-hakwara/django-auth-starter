@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 @pytest.mark.django_db
 def test_create_user():
     """Test creating a regular user with email and username."""
@@ -24,11 +25,13 @@ def test_create_user():
     assert user.is_email_verified is False
     assert user.check_password("testpass123!")
 
+
 @pytest.mark.django_db
 def test_create_user_without_email_raises():
     """Test that creating a user without email raises ValueError."""
     with pytest.raises(ValueError):
         User.objects.create_user(username="testuser", email="", password="testpass123!")
+
 
 @pytest.mark.django_db
 def test_create_superuser():
@@ -42,6 +45,7 @@ def test_create_superuser():
     assert user.is_superuser is True
     assert user.is_email_verified is True
 
+
 @pytest.mark.django_db
 def test_email_normalization():
     """Test that email is normalized (lowered domain)."""
@@ -52,6 +56,7 @@ def test_email_normalization():
     )
     assert user.email == "test@example.com"
 
+
 @pytest.mark.django_db
 def test_user_str():
     """Test the string representation of a user."""
@@ -61,6 +66,7 @@ def test_user_str():
         password="testpass123!",
     )
     assert str(user) == "testuser"
+
 
 @pytest.mark.django_db
 def test_get_full_name():
@@ -73,6 +79,7 @@ def test_get_full_name():
         last_name="Doe",
     )
     assert user.get_full_name() == "John Doe"
+
 
 @pytest.mark.django_db
 def test_get_short_name():

@@ -2,6 +2,7 @@
 
 from django.core.files.uploadedfile import UploadedFile
 
+
 def update_profile(
     *,
     user,
@@ -49,13 +50,13 @@ def update_profile(
         user.save(update_fields=update_fields)
 
 
-def change_password(*, user, old_password: str, new_password: str) -> bool:
+def change_password(*, user, old_password: str, new_password: str) -> None:
     """
-    Change the user's password.
+    Change the user's password after verifying the old one.
+    Raises ValueError if the old password is incorrect.
     """
     if not user.check_password(old_password):
-        return False
+        raise ValueError("Old password is incorrect.")
 
     user.set_password(new_password)
     user.save(update_fields=["password"])
-    return True

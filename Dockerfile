@@ -23,10 +23,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 && \
     rm -rf /var/lib/apt/lists/*
 
+# Create a non-root user to run the application
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
 COPY --from=builder /install /usr/local
 COPY . .
 
-RUN python manage.py collectstatic --noinput 2>/dev/null || true
+# collectstatic requires SECRET_KEY; pass it as a build argument.
+# The value used here is only for the build stage and is not used at runtime.
+ARG SECRET_KEY_BUILD=build-time-static-key-not-used-at-runtime
+RUN DJANGO_SECRET_KEY=${SECRET_KEY_BUILD} python manage.py collectstatic --noinput
+
+# Ensure the app user owns all files
+RUN chown -R appuser:appgroup /app
+
+USER appuser
 
 EXPOSE 8000
 

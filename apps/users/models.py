@@ -28,8 +28,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("username"),
         max_length=150,
         unique=True,
-        db_index=True,
-        help_text=_("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."),
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
         error_messages={
             "unique": _("A user with that username already exists."),
         },
@@ -37,7 +38,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         _("email address"),
         unique=True,
-        db_index=True,
         error_messages={
             "unique": _("A user with that email already exists."),
         },
@@ -62,9 +62,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
-        help_text=_(
-            "Designates whether the user can log into the admin site."
-        ),
+        help_text=_("Designates whether the user can log into the admin site."),
     )
     is_email_verified = models.BooleanField(
         _("email verified"),
@@ -82,10 +80,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = _("user")
         verbose_name_plural = _("users")
         ordering = ["-date_joined"]
-        indexes = [
-            models.Index(fields=["email"], name="idx_user_email"),
-            models.Index(fields=["username"], name="idx_user_username"),
-        ]
 
     def __str__(self) -> str:
         return self.username

@@ -25,7 +25,10 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS")
 # Database — PostgreSQL
 # ---------------------------------------------------------------------------
 DATABASES = {
-    "default": env.db_url("DATABASE_URL"),
+    "default": {
+        **env.db_url("DATABASE_URL"),
+        "CONN_MAX_AGE": 60,  # Reuse connections; avoids a new TCP handshake per request
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -51,3 +54,13 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# ---------------------------------------------------------------------------
+# Cache — Redis (required for shared, atomic rate limiting across workers)
+# ---------------------------------------------------------------------------
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": env("REDIS_URL", default="redis://redis:6379/1"),
+    }
+}

@@ -3,18 +3,36 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 @pytest.fixture
 def user(db):
-    """Fixture to create a test user."""
+    """Verified user fixture for tests that require an authenticated user."""
     return User.objects.create_user(
         username="testuser",
         email="testuser@example.com",
         password="SecurePass123!",
         first_name="Test",
-        last_name="User"
+        last_name="User",
+        is_email_verified=True,
     )
 
+
 @pytest.fixture
-def api_client():
+def unverified_user(db):
+    """Unverified user fixture for testing email verification flows."""
+    return User.objects.create_user(
+        username="unverifieduser",
+        email="unverified@example.com",
+        password="SecurePass123!",
+        first_name="Unverified",
+        last_name="User",
+        is_email_verified=False,
+    )
+
+
+@pytest.fixture
+def client():
+    """Standard Django test client."""
     from django.test import Client
+
     return Client()

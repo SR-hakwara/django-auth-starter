@@ -2,9 +2,11 @@
 
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
+
 from apps.emails.services import send_activation_email
 
 User = get_user_model()
+
 
 def get_user_by_email(email: str):
     try:
@@ -12,11 +14,13 @@ def get_user_by_email(email: str):
     except User.DoesNotExist:
         return None
 
+
 def get_user_by_pk(pk: int):
     try:
         return User.objects.get(pk=pk)
     except User.DoesNotExist:
         return None
+
 
 def register_user(
     *,
@@ -43,6 +47,7 @@ def register_user(
         send_activation_email(user=user, request=request)
 
     return user
+
 
 def activate_user(*, user) -> bool:
     """

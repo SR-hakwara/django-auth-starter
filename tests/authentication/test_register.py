@@ -4,15 +4,25 @@ from django.urls import reverse
 
 User = get_user_model()
 
-@pytest.mark.django_db
-def test_register_page_loads(api_client):
-    """Test that the registration page loads successfully."""
-    response = api_client.get(reverse("authentication:register"))
-    assert response.status_code == 200
 
 @pytest.mark.django_db
-def test_register_success(api_client):
-    """Test successful user registration."""
+def test_register_page_loads(client):
+    """Test that the registration page loads successfully."""
+    response = client.get(reverse("authentication:register"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_register_redirects_authenticated_user(client, user):
+    """Authenticated users should be redirected away from the register page."""
+    client.login(username="testuser", password="SecurePass123!")
+    response = client.get(reverse("authentication:register"))
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_register_success(client):
+    """Test successful user registration creates user and redirects."""
     data = {
         "username": "newuser",
         "email": "newuser@example.com",
@@ -21,13 +31,15 @@ def test_register_success(api_client):
         "password1": "SecurePass123!",
         "password2": "SecurePass123!",
     }
-    response = api_client.post(reverse("authentication:register"), data)
+    response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 302
     assert response.url == reverse("authentication:activation_sent")
-    assert User.objects.filter(email="newuser@example.com").exists()
+    new_user = User.objects.get(email="newuser@example.com")
+    assert not new_user.is_email_verified
+
 
 @pytest.mark.django_db
-def test_register_password_mismatch(api_client):
+def test_register_password_mismatch(client):
     """Test registration fails with mismatched passwords."""
     data = {
         "username": "newuser",
@@ -37,13 +49,14 @@ def test_register_password_mismatch(api_client):
         "password1": "SecurePass123!",
         "password2": "DifferentPass456!",
     }
-    response = api_client.post(reverse("authentication:register"), data)
+    response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 200
     assert not User.objects.filter(email="newuser@example.com").exists()
 
+
 @pytest.mark.django_db
-def test_register_duplicate_email(api_client, user):
-    """Test registration fails with existing email."""
+def test_register_duplicate_email(client, user):
+    """Test registration fails with an existing email."""
     data = {
         "username": "dupuser",
         "email": user.email,
@@ -52,6 +65,29 @@ def test_register_duplicate_email(api_client, user):
         "password1": "SecurePass123!",
         "password2": "SecurePass123!",
     }
-    response = api_client.post(reverse("authentication:register"), data)
+    response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 200
     assert User.objects.filter(email=user.email).count() == 1
+
+
+@pytest.mark.django_db
+def test_register_duplicate_username(client, user):
+    """Test registration fails with an existing username."""
+    data = {
+        "username": user.username,
+        "email": "different@example.com",
+        "first_name": "Dup",
+        "last_name": "User",
+        "password1": "SecurePass123!",
+        "password2": "SecurePass123!",
+    }
+    response = client.post(reverse("authentication:register"), data)
+    assert response.status_code == 200
+    assert User.objects.filter(username=user.username).count() == 1
+
+
+@pytest.mark.django_db
+def test_register_activation_sent_page_loads(client):
+    """Test the activation-sent confirmation page loads."""
+    response = client.get(reverse("authentication:activation_sent"))
+    assert response.status_code == 200
