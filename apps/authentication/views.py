@@ -10,6 +10,11 @@ from django.shortcuts import redirect, render
 from django.utils.encoding import force_str
 from django.utils.http import url_has_allowed_host_and_scheme, urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
+from typing import TYPE_CHECKING, cast
+
+if TYPE_CHECKING:
+    from apps.users.models import CustomUser  # custom user
+
 
 from apps.core.utils import (
     clear_failed_attempts,
@@ -48,7 +53,11 @@ def login_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            user = form.get_user()
+            # use a string literal with `cast` so the name is not required at
+            # runtime; otherwise ``CustomUser`` would be undefined when the
+            # preceding ``if TYPE_CHECKING`` block is skipped and pytest calls
+            # the view.
+            user = cast("CustomUser", form.get_user())
             login(request, user)
             clear_failed_attempts(request)
             messages.success(
@@ -138,7 +147,9 @@ def resend_activation_view(request: HttpRequest) -> HttpResponse:
     if is_rate_limited(request, key_prefix="resend_activation"):
         messages.error(request, _("Too many requests. Please try again later."))
         return redirect("profiles:profile")
-    user = request.user
+    # casting with a string avoids a NameError when the import above
+    # is guarded by TYPE_CHECKING (which is False at runtime).
+    user = cast("CustomUser", request.user)
     if user.is_email_verified:
         messages.info(request, _("Your email is already verified."))
     else:
