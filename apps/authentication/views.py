@@ -82,7 +82,7 @@ def login_view(request: HttpRequest) -> HttpResponse:
             # runtime; otherwise ``CustomUser`` would be undefined when the
             # preceding ``if TYPE_CHECKING`` block is skipped and pytest calls
             # the view.
-            user = cast("CustomUser", form.get_user())
+            user = cast("CustomUser", form.get_user())  # type: ignore[redundant-cast]
             login(request, user)
             clear_failed_attempts(request)
             messages.success(
@@ -223,7 +223,6 @@ def activate_account_view(
         user = None
 
     if user is not None and email_verification_token.check_token(user, token):
-        user = cast("CustomUser", user)
         activate_user(user=user)
         messages.success(
             request, _("Your email has been verified! You can now log in.")
@@ -308,7 +307,6 @@ def password_reset_request_view(request: HttpRequest) -> HttpResponse:
             email = form.cleaned_data["email"]
             user = get_user_by_email(email)
             if user:
-                user = cast("CustomUser", user)
                 send_password_reset_email(user=user, request=request)
             # Always show success to prevent email enumeration
             messages.success(

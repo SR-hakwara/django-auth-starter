@@ -27,7 +27,7 @@ def is_rate_limited(request: HttpRequest, key_prefix: str = "login_attempts") ->
     key = get_rate_limit_key(request, key_prefix)
     attempts = cache.get(key, 0)
     max_attempts = getattr(settings, "LOGIN_RATE_LIMIT_MAX_ATTEMPTS", 5)
-    return attempts >= max_attempts
+    return bool(attempts >= max_attempts)
 
 
 def record_failed_attempt(

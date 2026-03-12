@@ -29,7 +29,7 @@ def test_register_user_sends_email(monkeypatch):
         first_name="",
         last_name="",
         request=req,
-    )  # type: ignore[assignment]
+    )  # register_user returns CustomUser
     assert user.email == "foo@example.com"
     assert not user.is_email_verified
     assert called["args"][0] is user

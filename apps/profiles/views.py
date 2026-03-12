@@ -66,7 +66,7 @@ def profile_update_view(request: HttpRequest) -> HttpResponse:
         # Fetch a separate instance for the form to prevent it from mutating
         # request.user.avatar before our service handles the old vs new files.
 
-        form_instance = User.objects.get(pk=request.user.pk)
+        form_instance = User.objects.get(pk=request.user.pk)  # type: ignore[misc]
 
         form = ProfileUpdateForm(request.POST, request.FILES, instance=form_instance)
         if form.is_valid():

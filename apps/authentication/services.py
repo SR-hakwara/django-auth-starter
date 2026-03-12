@@ -8,7 +8,6 @@ whether an action is triggered via the web UI or a management command.
 from typing import cast
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import UserManager
 from django.http import HttpRequest
 
 from apps.emails.services import send_activation_email
@@ -17,7 +16,7 @@ from apps.users.models import CustomUser
 User = get_user_model()
 
 
-def get_user_by_email(email: str) -> "User | None":
+def get_user_by_email(email: str) -> "CustomUser | None":
     """Retrieve a user by their email address (case-insensitive).
 
     Args:
@@ -28,12 +27,12 @@ def get_user_by_email(email: str) -> "User | None":
         exists with that email.
     """
     try:
-        return User.objects.get(email__iexact=email)
+        return cast("CustomUser", User.objects.get(email__iexact=email))  # type: ignore[redundant-cast]
     except User.DoesNotExist:
         return None
 
 
-def get_user_by_pk(pk: int) -> "User | None":
+def get_user_by_pk(pk: int) -> "CustomUser | None":
     """Retrieve a user by their primary key.
 
     Args:
@@ -44,7 +43,7 @@ def get_user_by_pk(pk: int) -> "User | None":
         record exists (e.g. after decoding a stale activation URL).
     """
     try:
-        return User.objects.get(pk=pk)
+        return cast("CustomUser", User.objects.get(pk=pk))  # type: ignore[redundant-cast]
     except User.DoesNotExist:
         return None
 
@@ -57,7 +56,7 @@ def register_user(
     first_name: str = "",
     last_name: str = "",
     request: HttpRequest | None = None,
-) -> "User":
+) -> "CustomUser":
     """Create a new inactive user account and dispatch the activation email.
 
     Uses keyword-only arguments to prevent accidental positional mis-ordering
@@ -80,8 +79,7 @@ def register_user(
     Returns:
         The newly created ``CustomUser`` instance.
     """
-    usermanager = cast(UserManager, User.objects)
-    user = usermanager.create_user(
+    user = CustomUser.objects.create_user(  # pyright: ignore[reportAttributeAccessIssue]
         username=username,
         email=email,
         password=password,

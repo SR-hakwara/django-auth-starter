@@ -9,6 +9,7 @@ from django.core.files.uploadedfile import UploadedFile
 
 if TYPE_CHECKING:
     from apps.users.models import CustomUser
+    from django.db.models.fields.files import FieldFile
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +72,7 @@ def update_profile(
         user.is_email_verified = False
         update_fields.extend(["email", "is_email_verified"])
 
-    def _safe_delete(fieldfile):
+    def _safe_delete(fieldfile: "FieldFile") -> None:
         """Attempt to delete a FieldFile while ignoring locks on Windows.
 
         On Windows a file may be temporarily locked by another process

@@ -3,11 +3,11 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.urls import include, path
 
 
-def health_check(request):
+def health_check(request: HttpRequest) -> JsonResponse:
     """Lightweight health check for container orchestration probes."""
     return JsonResponse({"status": "ok"})
 

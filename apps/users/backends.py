@@ -1,9 +1,14 @@
 """Custom authentication backend for email OR username login."""
 
+from typing import TYPE_CHECKING
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.http import HttpRequest
+
+if TYPE_CHECKING:
+    from apps.users.models import CustomUser
 
 User = get_user_model()
 
@@ -20,8 +25,8 @@ class EmailOrUsernameBackend(ModelBackend):
         request: HttpRequest | None,
         username: str | None = None,
         password: str | None = None,
-        **kwargs,
-    ) -> "User | None":
+        **kwargs: object,
+    ) -> "CustomUser | None":
         """
         Authenticate a user by email or username.
 

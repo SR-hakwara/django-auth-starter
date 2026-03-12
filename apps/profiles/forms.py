@@ -1,6 +1,6 @@
 """Forms for the profiles app."""
 
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 from django import forms
 from django.contrib.auth import get_user_model
@@ -14,7 +14,7 @@ from apps.core.validators import validate_avatar
 User = get_user_model()
 
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):  # type: ignore[type-arg]
     """Form for updating user profile: name, email, and avatar."""
 
     class Meta:
@@ -60,7 +60,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
     def clean_email(self) -> str:
         """Validate email uniqueness excluding current user."""
-        email = self.cleaned_data.get("email", "").lower().strip()
+        email = cast(str, self.cleaned_data.get("email", "")).lower().strip()
         qs = User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk)
         if qs.exists():
             raise forms.ValidationError(
@@ -71,7 +71,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
     def clean_username(self) -> str:
         """Validate username uniqueness excluding current user."""
-        username = self.cleaned_data.get("username", "").strip()
+        username = cast(str, self.cleaned_data.get("username", "")).strip()
         qs = User.objects.filter(username__iexact=username).exclude(pk=self.instance.pk)
         if qs.exists():
             raise forms.ValidationError(

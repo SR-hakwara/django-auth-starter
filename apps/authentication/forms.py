@@ -1,5 +1,7 @@
 """Forms for the authentication app."""
 
+from typing import cast
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
@@ -39,7 +41,7 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class RegisterForm(forms.ModelForm):
+class RegisterForm(forms.ModelForm):  # type: ignore[type-arg]
     """User registration form with username, email, and password confirmation."""
 
     password1 = forms.CharField(
@@ -112,7 +114,7 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(
                 _("The two password fields didn't match."), code="password_mismatch"
             )
-        return password2
+        return cast(str, password2) if password2 is not None else None
 
     def clean_email(self) -> str:
         """Normalise and enforce uniqueness of the email address.
@@ -127,7 +129,7 @@ class RegisterForm(forms.ModelForm):
         Raises:
             ValidationError: If the email is already registered.
         """
-        email = self.cleaned_data.get("email", "").lower().strip()
+        email = cast(str, self.cleaned_data.get("email", "")).lower().strip()
         if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
                 _("A user with that email already exists."), code="email_exists"
@@ -146,7 +148,7 @@ class RegisterForm(forms.ModelForm):
         Raises:
             ValidationError: If the username is already taken.
         """
-        username = self.cleaned_data.get("username", "").strip()
+        username = cast(str, self.cleaned_data.get("username", "")).strip()
         if User.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError(
                 _("A user with that username already exists."), code="username_exists"
@@ -169,7 +171,7 @@ class PasswordResetRequestForm(forms.Form):
     )
 
 
-class CustomSetPasswordForm(SetPasswordForm):
+class CustomSetPasswordForm(SetPasswordForm):  # type: ignore[type-arg]
     """Custom set password form with styled widgets."""
 
     new_password1 = forms.CharField(

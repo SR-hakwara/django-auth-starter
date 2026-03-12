@@ -1,11 +1,10 @@
 import pytest
 from django.contrib.auth import get_user_model
 
-from apps.users.models import CustomUserManager
-from typing import cast
+from apps.users.managers import CustomUserManager
 
 User = get_user_model()
-manager = cast(CustomUserManager, User.objects)
+manager: CustomUserManager = User.objects  # type: ignore[assignment]
 
 
 @pytest.fixture
