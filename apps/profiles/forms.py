@@ -22,7 +22,7 @@ class ProfileUpdateForm(forms.ModelForm):
             "first_name": forms.TextInput(attrs={"class": INPUT_CSS}),
             "last_name": forms.TextInput(attrs={"class": INPUT_CSS}),
             "email": forms.EmailInput(attrs={"class": INPUT_CSS}),
-            "avatar": forms.ClearableFileInput(
+            "avatar": forms.FileInput(
                 attrs={
                     "class": "hidden",
                     "accept": "image/*",
@@ -38,9 +38,16 @@ class ProfileUpdateForm(forms.ModelForm):
         )
 
     def clean_avatar(self):
-        """Validate avatar file size and type."""
+        """Validate avatar file size and type — only for newly uploaded files."""
+        from django.core.files.uploadedfile import UploadedFile
+
         avatar = self.cleaned_data.get("avatar")
-        if avatar and hasattr(avatar, "size"):
+        # Only run validation on a *new* upload (UploadedFile).
+        # When no new file is chosen, cleaned_data contains either None or the
+        # existing FieldFile.  Calling validate_avatar() on an existing FieldFile
+        # would open a file handle on the current avatar *before* _safe_delete
+        # runs, which on Windows prevents os.remove() from succeeding.
+        if isinstance(avatar, UploadedFile):
             validate_avatar(avatar)
         return avatar
 
