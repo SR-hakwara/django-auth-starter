@@ -3,11 +3,10 @@
 from typing import cast
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import UserManager
 from django.http import HttpRequest
 
 from apps.emails.services import send_activation_email
-
-from django.contrib.auth.models import UserManager
 
 User = get_user_model()
 

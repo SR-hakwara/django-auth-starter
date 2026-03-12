@@ -1,7 +1,8 @@
 """Business logic layer for the profiles app."""
 
-from django.core.files.uploadedfile import UploadedFile
 import logging
+
+from django.core.files.uploadedfile import UploadedFile
 
 logger = logging.getLogger(__name__)
 

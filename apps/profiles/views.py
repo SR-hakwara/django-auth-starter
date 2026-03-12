@@ -3,6 +3,7 @@
 from typing import cast
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -13,8 +14,8 @@ from apps.emails.services import send_activation_email
 from .forms import PasswordChangeForm, ProfileUpdateForm
 from .services import change_password, update_profile
 
-from django.contrib.auth import get_user_model
 User = get_user_model()
+
 
 @login_required
 def profile_view(request: HttpRequest) -> HttpResponse:

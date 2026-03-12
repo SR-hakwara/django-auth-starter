@@ -40,3 +40,6 @@ htmlcov/
 
 # Node (if TailwindCSS build pipeline added later)
 node_modules/
+
+# Ignore files and directories that should not be committed to version control
+scripts/

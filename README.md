@@ -276,7 +276,7 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 
 ## Changelog
 
-### v1.1.0 — Security & Quality FIXE (2026-03-11)
+### v1.1.0 — Security & Quality FIXES (2026-03-11)
 
 **Security fixes:**
 - Logout converted to POST-only (CSRF logout attack prevention)
@@ -307,7 +307,7 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 
 ---
 
-### v1.2.0 — FIXE v2 (2026-03-12)
+### v1.2.0 — FIXES v2 (2026-03-12)
 
 **Security fixes:**
 - Content-Security-Policy header added via `apps/core/middleware.py`
@@ -326,6 +326,25 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 - `make migrate` and `make makemigrations` are now separate Makefile targets
 - Validator tests added for `apps/core/validators.py`
 - `CSRF_TRUSTED_ORIGINS` configured in `prod.py` for reverse-proxy deployments
+
+---
+
+### v1.3.0 — Avatar fix & polish (2026-03-12)
+
+**Bug fixes:**
+- `ProfileUpdateForm` widget changed from `ClearableFileInput` to `FileInput` — removes the duplicate "Currently / Clear / Change:" UI section that appeared alongside the custom "Change photo • Remove" buttons
+- `clean_avatar()` now guards with `isinstance(avatar, UploadedFile)` instead of `hasattr(avatar, "size")` — prevents opening a file handle on the existing avatar during form validation, which blocked `os.remove()` on Windows and left the file in `media/` after removal
+
+**UI improvements:**
+- Language switcher (EN / FR) added to the desktop navigation bar (uses the `/i18n/set_language/` endpoint registered in v1.2.0)
+
+**Code quality:**
+- Replaced `Optional[str]` with `str | None` (Python 3.10+ built-in union syntax); removed unused `from typing import Optional`
+- Import ordering cleaned up in `authentication/services.py`, `profiles/services.py`, `profiles/views.py`
+- `scripts/` added to `.gitignore`
+
+**Tests:**
+- Added `test_profile_update_avatar_with_lock` and `test_profile_remove_avatar_with_lock` — verify avatar operations survive a `PermissionError` (Windows file-lock scenario)
 
 ---
 

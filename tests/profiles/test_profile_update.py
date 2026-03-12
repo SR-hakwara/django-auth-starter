@@ -1,7 +1,6 @@
 import pytest
-from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
-
+from django.urls import reverse
 
 
 @pytest.mark.django_db
@@ -57,7 +56,6 @@ def test_profile_update_username(client, user):
 
 
 @pytest.mark.django_db
-
 def test_profile_update_avatar_with_lock(monkeypatch, client, user):
     """If deleting the existing avatar raises ``PermissionError`` we should
     still allow the update (Windows can lock media files).
@@ -66,12 +64,15 @@ def test_profile_update_avatar_with_lock(monkeypatch, client, user):
     # give the user an initial avatar file; the contents are not
     # important, we just need something the ImageField can reference.
     from io import BytesIO
+
     from PIL import Image
 
     buf = BytesIO()
     Image.new("RGB", (1, 1)).save(buf, format="PNG")
     buf.seek(0)
-    user.avatar.save("old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png"))
+    user.avatar.save(
+        "old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png")
+    )
     user.save()
 
     # simulate a locked file error when attempting to delete the old avatar
@@ -96,7 +97,9 @@ def test_profile_update_avatar_with_lock(monkeypatch, client, user):
             "last_name": user.last_name,
             "email": user.email,
             # Django test client requires ``format="multipart"`` for files
-            "avatar": SimpleUploadedFile("new.png", buf.read(), content_type="image/png"),
+            "avatar": SimpleUploadedFile(
+                "new.png", buf.read(), content_type="image/png"
+            ),
         },
         format="multipart",
     )
@@ -107,23 +110,26 @@ def test_profile_update_avatar_with_lock(monkeypatch, client, user):
 
 
 @pytest.mark.django_db
-
 def test_profile_remove_avatar_with_lock(monkeypatch, client, user):
     """Removing an avatar should not crash even if the file is locked."""
     client.login(username=user.username, password="SecurePass123!")
     from io import BytesIO
+
     from PIL import Image
 
     buf = BytesIO()
     Image.new("RGB", (1, 1)).save(buf, format="PNG")
     buf.seek(0)
-    user.avatar.save("old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png"))
+    user.avatar.save(
+        "old.png", SimpleUploadedFile("old.png", buf.read(), content_type="image/png")
+    )
     user.save()
 
     def locked_delete(self, save=False):
         raise PermissionError("locked")
 
     from django.db.models.fields.files import FieldFile
+
     monkeypatch.setattr(FieldFile, "delete", locked_delete, raising=False)
 
     response = client.post(
