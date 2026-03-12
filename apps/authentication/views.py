@@ -132,7 +132,9 @@ def activate_account_view(
 
 @login_required
 def resend_activation_view(request: HttpRequest) -> HttpResponse:
-    """Resend the email verification link to the current user."""
+    """Resend the email verification link to the current user. Accepts POST only."""
+    if request.method != "POST":
+        return redirect("profiles:profile")
     if is_rate_limited(request, key_prefix="resend_activation"):
         messages.error(request, _("Too many requests. Please try again later."))
         return redirect("profiles:profile")

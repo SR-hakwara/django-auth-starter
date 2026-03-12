@@ -70,6 +70,7 @@ MIDDLEWARE: list[str] = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.core.middleware.ContentSecurityPolicyMiddleware",
 ]
 
 # ---------------------------------------------------------------------------
@@ -207,6 +208,22 @@ CACHES = {
 # ---------------------------------------------------------------------------
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
+
+# ---------------------------------------------------------------------------
+# Content Security Policy
+# ---------------------------------------------------------------------------
+# NOTE: 'unsafe-eval' is required by TailwindCSS CDN (uses new Function()).
+# For a strict no-unsafe-eval CSP, replace the CDN with a local Tailwind CLI
+# build and remove 'unsafe-eval' from script-src.
+CONTENT_SECURITY_POLICY: str = (
+    "default-src 'self'; "
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' "
+    "cdn.tailwindcss.com unpkg.com cdn.jsdelivr.net; "
+    "style-src 'self' 'unsafe-inline' fonts.googleapis.com; "
+    "font-src 'self' fonts.gstatic.com; "
+    "img-src 'self' data:; "
+    "connect-src 'self';"
+)
 
 # ---------------------------------------------------------------------------
 # Login Rate Limiting

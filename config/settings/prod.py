@@ -55,6 +55,11 @@ SECURE_HSTS_PRELOAD = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# Required when the app sits behind a TLS-terminating reverse proxy.
+# Django 4.0+ rejects POST/PUT requests whose Origin header doesn't match the
+# Host header unless the origin is in this list.
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+
 # ---------------------------------------------------------------------------
 # Cache — Redis (required for shared, atomic rate limiting across workers)
 # ---------------------------------------------------------------------------

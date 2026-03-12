@@ -3,12 +3,18 @@
 from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpRequest
+from ipware import get_client_ip
 
 
 def get_rate_limit_key(request: HttpRequest, key_prefix: str = "login_attempts") -> str:
-    """Build a cache key for rate limiting based on IP and an optional prefix."""
-    ip = request.META.get("REMOTE_ADDR", "unknown")
-    return f"{key_prefix}_{ip}"
+    """Build a cache key for rate limiting based on real client IP.
+
+    Uses ``django-ipware`` so the correct IP is extracted even behind a reverse
+    proxy that sets ``X-Forwarded-For`` (e.g. Nginx, AWS ALB, Cloudflare).
+    Falls back to ``'unknown'`` when no IP can be determined.
+    """
+    ip, _ = get_client_ip(request)
+    return f"{key_prefix}_{ip or 'unknown'}"
 
 
 def is_rate_limited(request: HttpRequest, key_prefix: str = "login_attempts") -> bool:
