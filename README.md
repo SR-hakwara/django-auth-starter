@@ -276,9 +276,7 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 
 ## Changelog
 
-### v1.1.0 — Security & Quality Audit (2026-03-11)
-
-Full audit performed — see [AUDIT.md](AUDIT.md) for details.
+### v1.1.0 — Security & Quality FIXE (2026-03-11)
 
 **Security fixes:**
 - Logout converted to POST-only (CSRF logout attack prevention)
@@ -309,9 +307,7 @@ Full audit performed — see [AUDIT.md](AUDIT.md) for details.
 
 ---
 
-### v1.2.0 — Audit v2 (2026-03-12)
-
-Second audit pass — see [AUDIT.md](AUDIT.md) for full details.
+### v1.2.0 — FIXE v2 (2026-03-12)
 
 **Security fixes:**
 - Content-Security-Policy header added via `apps/core/middleware.py`
