@@ -19,13 +19,46 @@ User = get_user_model()
 
 @login_required
 def profile_view(request: HttpRequest) -> HttpResponse:
-    """Display the user's profile."""
+    """Display the authenticated user's public profile.
+
+    Permissions:
+        Login required (``@login_required``).
+
+    Args:
+        request: The incoming HTTP request.
+
+    Returns:
+        ``200`` rendering of ``profiles/profile.html`` with the current
+        user object exposed as ``{{ user }}`` in the template context.
+    """
     return render(request, "profiles/profile.html", {"user": request.user})
 
 
 @login_required
 def profile_update_view(request: HttpRequest) -> HttpResponse:
-    """Handle profile updates including avatar and email."""
+    """Handle profile updates including username, names, email, and avatar.
+
+    A fresh ``User`` instance is fetched from the database before binding
+    it to the form.  This prevents ``ProfileUpdateForm`` from mutating the
+    ``request.user`` proxy object while the service function is still
+    comparing old vs new values (avatar deletion race condition on Windows).
+
+    When the email address changes the account's ``is_email_verified`` flag
+    is cleared and a new activation email is dispatched so the user must
+    confirm ownership of the new address.
+
+    Permissions:
+        Login required (``@login_required``).
+
+    Args:
+        request: The incoming HTTP request.  ``GET`` pre-populates the form
+            with current profile data; ``POST`` processes the update.
+
+    Returns:
+        - ``302`` redirect to ``profiles:profile`` on success.
+        - ``200`` rendering of ``profiles/profile_update.html`` with the
+          form on ``GET`` or invalid ``POST``.
+    """
     if request.method == "POST":
         # Fetch a separate instance for the form to prevent it from mutating
         # request.user.avatar before our service handles the old vs new files.
@@ -74,7 +107,26 @@ def profile_update_view(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def password_change_view(request: HttpRequest) -> HttpResponse:
-    """Handle authenticated password changes."""
+    """Handle authenticated password changes.
+
+    Verifies the current password before applying the new one.  After a
+    successful change ``update_session_auth_hash`` is called so the user
+    stays logged in — without it Django would invalidate the session
+    because the password hash (stored in the session) no longer matches.
+
+    Permissions:
+        Login required (``@login_required``).
+
+    Args:
+        request: The incoming HTTP request.  ``GET`` renders the blank
+            form; ``POST`` processes the change.
+
+    Returns:
+        - ``302`` redirect to ``profiles:profile`` on success.
+        - ``200`` rendering of ``profiles/password_change.html`` with the
+          form on ``GET`` or invalid ``POST`` (including wrong current
+          password).
+    """
     if request.method == "POST":
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():

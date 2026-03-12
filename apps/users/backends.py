@@ -21,17 +21,28 @@ class EmailOrUsernameBackend(ModelBackend):
         username: str | None = None,
         password: str | None = None,
         **kwargs,
-    ):
+    ) -> "User | None":
         """
         Authenticate a user by email or username.
 
+        The ``username`` parameter is treated as *either* a username or an
+        email address.  A case-insensitive lookup is performed on both
+        fields simultaneously so "Alice", "alice", and "ALICE@example.com"
+        all resolve to the same account.
+
+        A dummy ``set_password`` call is made on every failed lookup to
+        ensure constant-time behaviour and prevent user-enumeration via
+        timing side-channels.
+
         Args:
-            request: The HTTP request.
-            username: The email or username entered by the user.
-            password: The password.
+            request: The current HTTP request (may be ``None`` in tests).
+            username: The email *or* username submitted via the login form.
+            password: The plain-text password to verify.
+            **kwargs: Ignored extra keyword arguments forwarded by Django.
 
         Returns:
-            User instance if authentication succeeds, None otherwise.
+            The authenticated ``CustomUser`` instance, or ``None`` if
+            credentials are invalid or the account cannot authenticate.
         """
         if username is None or password is None:
             return None

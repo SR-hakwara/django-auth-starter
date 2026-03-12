@@ -1,4 +1,9 @@
-"""Core utilities for the application."""
+"""Core utilities for the application.
+
+Currently provides an IP-based rate-limiting facility backed by Django's
+cache framework.  All helpers are intentionally stateless so they can be
+reused by any view without importing app-specific models.
+"""
 
 from django.conf import settings
 from django.core.cache import cache

@@ -348,6 +348,24 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 
 ---
 
+### v1.4.0 — Documentation & type-hint (2026-03-12)
+
+**Documentation:**
+- Google Style docstrings added or rewritten across all modules: `users`, `authentication`, `profiles`, `emails`, `core`
+- Every public class, method, and function now documents **permissions**, **args**, **returns**, and **raises**
+- Module-level docstrings added to `emails/services.py`, `authentication/services.py`, `core/utils.py`, `core/constants.py`
+- Inline comments added to complex algorithms (rate-limit atomic pattern, magic-byte MIME detection, token hash construction)
+
+**Type hints:**
+- `validate_avatar(file: object)` → `validate_avatar(file: UploadedFile)` — resolves Pylance attribute errors
+- `AVATAR_ALLOWED_MIME_TYPES` changed to `frozenset[str]` (immutable, safer)
+- `ContentSecurityPolicyMiddleware.__init__` and `__call__` fully annotated with `Callable` and `HttpRequest`/`HttpResponse`
+- `delete_avatar_on_user_delete` signal handler annotated with `sender: type`, `instance: "CustomUser"`, `-> None`
+- `change_password` and `update_profile` `user` parameters typed as `"CustomUser"`
+- `TYPE_CHECKING` guard + `from __future__ import annotations` added to `profiles/services.py` and `emails/services.py`
+
+---
+
 ## License
 
 MIT — free for personal and commercial use.

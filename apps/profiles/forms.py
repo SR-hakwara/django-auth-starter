@@ -31,7 +31,12 @@ class ProfileUpdateForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: object, **kwargs: object) -> None:
+        """Initialise the form and annotate the email field with a help text.
+
+        The help text reminds users that changing their email will trigger
+        a new verification flow, so the change is not silently applied.
+        """
         super().__init__(*args, **kwargs)
         self.fields["email"].help_text = _(
             "Changing your email will require re-verification."

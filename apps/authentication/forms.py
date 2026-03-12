@@ -98,6 +98,14 @@ class RegisterForm(forms.ModelForm):
         }
 
     def clean_password2(self) -> str | None:
+        """Verify that both password fields are identical.
+
+        Returns:
+            The confirmed password value.
+
+        Raises:
+            ValidationError: If ``password1`` and ``password2`` do not match.
+        """
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -107,6 +115,18 @@ class RegisterForm(forms.ModelForm):
         return password2
 
     def clean_email(self) -> str:
+        """Normalise and enforce uniqueness of the email address.
+
+        The address is lower-cased and stripped of surrounding whitespace
+        before the uniqueness check so that ``User@Example.com`` and
+        ``user@example.com`` are treated as the same address.
+
+        Returns:
+            The normalised email string.
+
+        Raises:
+            ValidationError: If the email is already registered.
+        """
         email = self.cleaned_data.get("email", "").lower().strip()
         if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError(
@@ -115,6 +135,17 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def clean_username(self) -> str:
+        """Normalise and enforce uniqueness of the username.
+
+        Strips surrounding whitespace before the uniqueness check so that
+        ``  johndoe  `` and ``johndoe`` are treated as the same handle.
+
+        Returns:
+            The stripped username string.
+
+        Raises:
+            ValidationError: If the username is already taken.
+        """
         username = self.cleaned_data.get("username", "").strip()
         if User.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError(

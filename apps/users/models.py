@@ -10,18 +10,30 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
-    Custom user model supporting login via username or email.
+    Custom user model replacing Django's default ``auth.User``.
 
-    Fields:
-        username: Unique username.
-        email: Unique email address.
-        first_name: User's first name.
-        last_name: User's last name.
-        avatar: User's profile photo.
-        is_active: Whether the user account is active.
-        is_staff: Whether the user can access the admin site.
-        is_email_verified: Whether the user's email has been verified.
-        date_joined: Timestamp of account creation.
+    Stored in the ``users_customuser`` database table.  Inherits
+    ``PermissionsMixin`` to gain the standard ``groups`` and
+    ``user_permissions`` many-to-many relations.
+
+    Authentication works via *username* **or** *email* thanks to
+    ``EmailOrUsernameBackend``.  A separate email-verification flag
+    (``is_email_verified``) gates access to certain features without
+    disabling the account outright.
+
+    Attributes:
+        username (str): Unique login handle (max 150 chars).
+        email (str): Unique email address used for notifications and
+            alternative login.
+        first_name (str): Optional first name.
+        last_name (str): Optional last name.
+        avatar (ImageField): Optional profile picture stored under
+            ``MEDIA_ROOT/avatars/``.
+        is_active (bool): Soft-delete flag; inactive users cannot log in.
+        is_staff (bool): Grants access to the Django admin interface.
+        is_email_verified (bool): Set to ``True`` after the user clicks
+            the activation link sent by email.
+        date_joined (datetime): UTC timestamp recorded at account creation.
     """
 
     username = models.CharField(
@@ -82,6 +94,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ordering = ["-date_joined"]
 
     def __str__(self) -> str:
+        """Return the username as the human-readable representation."""
         return self.username
 
     def get_full_name(self) -> str:

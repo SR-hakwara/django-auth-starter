@@ -11,8 +11,14 @@ User = get_user_model()
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     """
-    Custom User Admin. Allows setting the avatar, username, and email.
-    Lists and searches correctly.
+    Admin interface for ``CustomUser``.
+
+    Extends Django's built-in ``UserAdmin`` with:
+    - The ``avatar`` image field in the *Personal info* fieldset.
+    - The ``is_email_verified`` flag in the *Permissions* fieldset and
+      in the list/filter panels.
+    - Case-insensitive search across ``username``, ``email``,
+      ``first_name``, and ``last_name``.
     """
 
     model = User
