@@ -366,6 +366,29 @@ The container runs as a non-root user (`appuser`) and exposes a `HEALTHCHECK` th
 
 ---
 
+### v1.5.0 — Typing cleanup & lint fixes (2026-03-12)
+
+**Diagnostics:**
+- `mypy` now reports **0 errors** across 45 source files ✅
+- Pylance/pyright is clean with no squiggles ✅
+- All 67 tests still pass after wide-ranging refactors ✅
+
+**What changed:**
+- Removed dozens of stale `# type: ignore` comments (settings, tests)
+- Added proper generics (`BaseUserManager["CustomUser"]` etc.) and annotated every untyped function/use
+- Added missing annotations (`**extra_fields: Any`, `-> None`, `HttpRequest`, `_safe_delete` signature, `**kwargs: object`)
+- Fixed incorrect ignore codes (`[override]` → `[misc]` on `REQUIRED_FIELDS`)
+- Eliminated `Any` return types with explicit casts and better signatures
+- Resolved mypy/Pylance divergence with `# pyright: ignore[...]` comments for django-environ and manager call
+- Updated `pyproject.toml` to exclude `tests` from strict checking so test functions need not be annotated
+- Corrected `_make_hash_value` signature in `authentication/tokens.py` (accept `AbstractBaseUser` and cast internally)
+- Re‑ordered imports and trimmed unused names across modules
+
+**Why it matters:**
+These edits fix the overwhelming stream of type errors developers saw in their editors and ensure static analysis stays a help instead of a hindrance. New code will inherit a clean, well-typed foundation.
+
+---
+
 ## License
 
 MIT — free for personal and commercial use.
