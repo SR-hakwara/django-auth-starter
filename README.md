@@ -6,7 +6,7 @@ A modern, production-ready Django authentication starter kit. Free, open source,
 ![Django 6+](https://img.shields.io/badge/Django-6+-092E20?logo=django&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-CDN-06B6D4?logo=tailwindcss&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
-![Tests](https://img.shields.io/badge/tests-48%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/tests-67%20passed-brightgreen)
 
 ---
 
@@ -212,7 +212,7 @@ python manage.py compilemessages
 ## Testing
 
 ```bash
-# Run all 48 tests
+# Run all 67 tests
 pytest -v
 
 # With coverage report
@@ -223,10 +223,10 @@ pytest --cov=apps --cov-report=term-missing
 
 | Module | Cases covered |
 |---|---|
-| `authentication` | Login (email + username), logout POST/GET, rate limiting, open redirect, register, activation, password reset confirm |
-| `core` | Avatar validator — JPEG/PNG/WebP valid, oversized, invalid type, empty file |
-| `profiles` | Profile view, update, email change triggers re-verification, password change, avatar lock |
-| `users` | Model creation, superuser, email normalization, `__str__`, `get_full_name` |
+| `authentication` | Login (email + username), logout POST/GET, rate limiting & open-redirect, register, activation, password reset, service helper functions |
+| `core` | Avatar validator (JPEG/PNG/WebP, size limits, invalid/empty) and utilities (rate-limit key, cache increment error) |
+| `profiles` | Profile view & update, form validation (email/username conflicts), password change, avatar lock handling |
+| `users` | CustomUser model/manager, authentication backend, `post_delete` avatar cleanup signal |
 
 ---
 

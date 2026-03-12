@@ -26,5 +26,13 @@ check_untyped_defs = true
 ignore_missing_imports = true
 plugins = ["mypy_django_plugin.main"]
 
+strict = true
+
+warn_unused_configs = true
+warn_return_any = true
+warn_unused_ignores = true
+
+disallow_untyped_defs = true
+
 [tool.django-stubs]
 django_settings_module = "config.settings.dev"

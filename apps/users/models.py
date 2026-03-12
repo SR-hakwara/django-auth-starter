@@ -74,7 +74,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS: list[str] = ["email", "first_name", "last_name"]
+    REQUIRED_FIELDS: list[str] = ["email", "first_name", "last_name"] # type: ignore[override]
 
     class Meta:
         verbose_name = _("user")

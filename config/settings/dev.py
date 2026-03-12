@@ -8,6 +8,9 @@ Extends base settings with development-friendly defaults:
 """
 
 from .base import *  # noqa: F401, F403
+import django_stubs_ext
+
+django_stubs_ext.monkeypatch()
 
 # ---------------------------------------------------------------------------
 # Debug

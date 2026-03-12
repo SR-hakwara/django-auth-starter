@@ -11,6 +11,31 @@ def test_profile_requires_login(client):
 
 
 @pytest.mark.django_db
+def test_profile_update_get_page(client, user):
+    """GETting the update page should return 200 for authenticated user."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.get(reverse("profiles:profile_update"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_password_change_get_page(client, user):
+    """GETting the password change page should return 200 for authenticated user."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.get(reverse("profiles:password_change"))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_change_password_service_raises(user):
+    """change_password() should raise ValueError when old password is wrong."""
+    from apps.profiles.services import change_password
+
+    with pytest.raises(ValueError):
+        change_password(user=user, old_password="incorrect", new_password="x")
+
+
+@pytest.mark.django_db
 def test_profile_loads_for_authenticated_user(client, user):
     """Test that profile page loads for authenticated users."""
     client.login(username=user.username, password="SecurePass123!")

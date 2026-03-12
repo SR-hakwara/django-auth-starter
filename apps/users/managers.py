@@ -1,8 +1,11 @@
 """Custom User Manager for email + username authentication."""
-
+from __future__ import annotations
+from typing import cast, TYPE_CHECKING
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+if TYPE_CHECKING:
+    from apps.users.models import CustomUser  # custom user
 
 class CustomUserManager(BaseUserManager):
     """
@@ -16,7 +19,7 @@ class CustomUserManager(BaseUserManager):
         email: str,
         password: str | None = None,
         **extra_fields,
-    ) -> "CustomUser":  # noqa: F821
+    ) -> CustomUser:
         """
         Create and save a regular user.
 
@@ -50,7 +53,7 @@ class CustomUserManager(BaseUserManager):
         email: str,
         password: str | None = None,
         **extra_fields,
-    ) -> "CustomUser":  # noqa: F821
+    ) -> CustomUser:
         """
         Create and save a superuser.
 

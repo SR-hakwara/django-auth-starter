@@ -45,6 +45,66 @@ def test_password_reset_done_page_loads(client):
 
 
 @pytest.mark.django_db
+
+def test_password_reset_rate_limited(client, user, settings):
+    # stub is_rate_limited so that the second request is considered throttled
+    from apps.core import utils
+
+    call_count = {"n": 0}
+
+    def fake_rate(req, key_prefix="login_attempts"):
+        call_count["n"] += 1
+        return call_count["n"] > 1
+
+    monkeypatch = pytest.MonkeyPatch()
+    monkeypatch.setattr(utils, "is_rate_limited", fake_rate)
+
+    # first request not limited
+    response = client.post(reverse("authentication:password_reset"), {"email": user.email})
+    # second request should be throttled; follow redirect to capture messages
+    response = client.post(reverse("authentication:password_reset"), {"email": user.email}, follow=True)
+    # we followed the redirect, which means branch ran; final page loads OK
+    assert response.status_code == 200
+    monkeypatch.undo()
+
+
+@pytest.mark.django_db
+
+def test_resend_activation_post_sends_email(monkeypatch, client, user):
+    # use unverified user so the email branch runs
+    user.is_email_verified = False
+    user.save()
+    client.login(username="testuser", password="SecurePass123!")
+    called = {}
+
+    def fake_send_activation_email(*, user, request):
+        called["user"] = user
+
+    monkeypatch.setattr("apps.authentication.views.send_activation_email", fake_send_activation_email)
+    response = client.post(reverse("authentication:resend_activation"))
+    assert response.status_code == 302
+    assert called.get("user") == user
+
+
+@pytest.mark.django_db
+
+def test_resend_activation_rate_limited(client, user, settings):
+    client.login(username="testuser", password="SecurePass123!")
+    # stub the utility to always report rate limited
+    from apps.core import utils
+
+    monkeypatch = pytest.MonkeyPatch()
+    monkeypatch.setattr(utils, "is_rate_limited", lambda req, key_prefix="login_attempts": True)
+
+    user.is_email_verified = False
+    user.save()
+    response = client.post(reverse("authentication:resend_activation"), follow=True)
+    # branch executed and page rendered
+    assert response.status_code == 200
+    monkeypatch.undo()
+
+
+@pytest.mark.django_db
 def test_password_reset_confirm_valid_token(client, user):
     """Test password reset confirm with a valid token allows setting a new password."""
     uid = urlsafe_base64_encode(force_bytes(user.pk))

@@ -2,6 +2,11 @@
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
+from typing import TYPE_CHECKING,cast
+
+if TYPE_CHECKING:
+    from apps.users.models import CustomUser  # custom user
+
 
 class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
     """
@@ -10,6 +15,7 @@ class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
 
     def _make_hash_value(self, user, timestamp: int) -> str:
         # We append is_email_verified to ensure token invalidates when verified.
+        user=cast("CustomUser", user)
         login_timestamp = (
             ""
             if user.last_login is None
