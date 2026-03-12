@@ -3,13 +3,18 @@
 import pytest
 from django.contrib.auth import get_user_model
 
+from apps.users.models import CustomUserManager
+from typing import cast
+
 User = get_user_model()
+manager = cast(CustomUserManager, User.objects)
+
 
 
 @pytest.mark.django_db
 def test_create_user():
     """Test creating a regular user with email and username."""
-    user = User.objects.create_user(
+    user = manager.create_user(
         username="testuser",
         email="test@example.com",
         password="testpass123!",
@@ -30,13 +35,13 @@ def test_create_user():
 def test_create_user_without_email_raises():
     """Test that creating a user without email raises ValueError."""
     with pytest.raises(ValueError):
-        User.objects.create_user(username="testuser", email="", password="testpass123!")
+        manager.create_user(username="testuser", email="", password="testpass123!")
 
 
 @pytest.mark.django_db
 def test_create_superuser():
     """Test creating a superuser."""
-    user = User.objects.create_superuser(
+    user = manager.create_superuser(
         username="adminuser",
         email="admin@example.com",
         password="adminpass123!",
@@ -49,7 +54,7 @@ def test_create_superuser():
 @pytest.mark.django_db
 def test_email_normalization():
     """Test that email is normalized (lowered domain)."""
-    user = User.objects.create_user(
+    user = manager.create_user(
         username="testuser",
         email="test@EXAMPLE.COM",
         password="testpass123!",
@@ -60,7 +65,7 @@ def test_email_normalization():
 @pytest.mark.django_db
 def test_user_str():
     """Test the string representation of a user."""
-    user = User.objects.create_user(
+    user = manager.create_user(
         username="testuser",
         email="test@example.com",
         password="testpass123!",
@@ -71,7 +76,7 @@ def test_user_str():
 @pytest.mark.django_db
 def test_get_full_name():
     """Test get_full_name returns first + last name."""
-    user = User.objects.create_user(
+    user = manager.create_user(
         username="testuser",
         email="test@example.com",
         password="testpass123!",
@@ -84,7 +89,7 @@ def test_get_full_name():
 @pytest.mark.django_db
 def test_get_short_name():
     """Test get_short_name returns first name."""
-    user = User.objects.create_user(
+    user = manager.create_user(
         username="testuser",
         email="test@example.com",
         password="testpass123!",

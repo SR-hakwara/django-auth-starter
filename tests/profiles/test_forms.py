@@ -1,18 +1,19 @@
+from typing import cast
+
 import pytest
 from django.contrib.auth import get_user_model
-
+from apps.users.models import CustomUserManager
 from apps.profiles.forms import ProfileUpdateForm
 
 User = get_user_model()
-
+manager = cast(CustomUserManager, User.objects)
 
 @pytest.mark.django_db
 def test_profile_update_form_email_conflict(user):
     # create a second account, then try to update the first user to that email
     from django.contrib.auth import get_user_model
 
-    User = get_user_model()
-    other = User.objects.create_user(username="other", email="other@example.com", password="x")
+    other = manager.create_user(username="other", email="other@example.com", password="x")
 
     form = ProfileUpdateForm(
         data={
@@ -29,7 +30,7 @@ def test_profile_update_form_email_conflict(user):
 
 @pytest.mark.django_db
 def test_profile_update_form_username_conflict(user):
-    other = User.objects.create_user(
+    other = manager.create_user(
         username="other", email="other@example.com", password="x"
     )
     form = ProfileUpdateForm(

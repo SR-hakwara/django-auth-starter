@@ -1,0 +1,600 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-12 05:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\apps\authentication\apps.py:7
+msgid "Authentication"
+msgstr ""
+
+#: .\apps\authentication\forms.py:20
+msgid "Email or Username"
+msgstr ""
+
+#: .\apps\authentication\forms.py:24
+msgid "you@example.com or username"
+msgstr ""
+
+#: .\apps\authentication\forms.py:31 .\apps\authentication\forms.py:46
+msgid "Password"
+msgstr ""
+
+#: .\apps\authentication\forms.py:35 .\apps\authentication\forms.py:50
+#: .\apps\authentication\forms.py:60 .\apps\authentication\forms.py:149
+#: .\apps\authentication\forms.py:159 .\apps\profiles\forms.py:85
+#: .\apps\profiles\forms.py:95 .\apps\profiles\forms.py:105
+msgid "••••••••"
+msgstr ""
+
+#: .\apps\authentication\forms.py:56
+msgid "Confirm password"
+msgstr ""
+
+#: .\apps\authentication\forms.py:73
+msgid "johndoe"
+msgstr ""
+
+#: .\apps\authentication\forms.py:80 .\apps\authentication\forms.py:134
+msgid "you@example.com"
+msgstr ""
+
+#: .\apps\authentication\forms.py:87
+msgid "John"
+msgstr ""
+
+#: .\apps\authentication\forms.py:94
+msgid "Doe"
+msgstr ""
+
+#: .\apps\authentication\forms.py:105
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: .\apps\authentication\forms.py:113 .\apps\profiles\forms.py:60
+#: .\apps\users\models.py:42
+msgid "A user with that email already exists."
+msgstr ""
+
+#: .\apps\authentication\forms.py:121 .\apps\profiles\forms.py:71
+#: .\apps\users\models.py:35
+msgid "A user with that username already exists."
+msgstr ""
+
+#: .\apps\authentication\forms.py:130 .\templates\profiles\profile.html:43
+msgid "Email"
+msgstr ""
+
+#: .\apps\authentication\forms.py:145 .\apps\profiles\forms.py:91
+msgid "New password"
+msgstr ""
+
+#: .\apps\authentication\forms.py:155 .\apps\profiles\forms.py:101
+msgid "Confirm new password"
+msgstr ""
+
+#: .\apps\authentication\views.py:44
+msgid "Too many login attempts. Please try again later."
+msgstr ""
+
+#: .\apps\authentication\views.py:55
+#, python-format
+msgid "Welcome back, %(name)s!"
+msgstr ""
+
+#: .\apps\authentication\views.py:91
+msgid "Account created! Please check your email to activate your account."
+msgstr ""
+
+#: .\apps\authentication\views.py:104
+msgid "You have been logged out."
+msgstr ""
+
+#: .\apps\authentication\views.py:126
+msgid "Your email has been verified! You can now log in."
+msgstr ""
+
+#: .\apps\authentication\views.py:139 .\apps\authentication\views.py:157
+msgid "Too many requests. Please try again later."
+msgstr ""
+
+#: .\apps\authentication\views.py:143
+msgid "Your email is already verified."
+msgstr ""
+
+#: .\apps\authentication\views.py:148
+#, python-format
+msgid "A new verification email has been sent to %(email)s."
+msgstr ""
+
+#: .\apps\authentication\views.py:170
+msgid ""
+"If an account with that email exists, a password reset link has been sent."
+msgstr ""
+
+#: .\apps\authentication\views.py:197
+msgid "This password reset link is invalid or has expired."
+msgstr ""
+
+#: .\apps\authentication\views.py:206
+msgid "Your password has been reset. You can now log in."
+msgstr ""
+
+#: .\apps\core\apps.py:7
+msgid "Core Utilities"
+msgstr ""
+
+#: .\apps\core\validators.py:14
+#, python-format
+msgid "Avatar file size must not exceed 2 MB. Your file is %(size)s MB."
+msgstr ""
+
+#: .\apps\core\validators.py:26
+msgid "Unsupported image type. Allowed formats: JPEG, PNG, WebP."
+msgstr ""
+
+#: .\apps\emails\apps.py:7
+msgid "Emails"
+msgstr ""
+
+#: .\apps\profiles\apps.py:7
+msgid "Profiles"
+msgstr ""
+
+#: .\apps\profiles\forms.py:37
+msgid "Changing your email will require re-verification."
+msgstr ""
+
+#: .\apps\profiles\forms.py:81
+msgid "Current password"
+msgstr ""
+
+#: .\apps\profiles\views.py:62
+msgid ""
+"Profile updated. A verification link has been sent to your new email "
+"address. Please verify it to regain full access."
+msgstr ""
+
+#: .\apps\profiles\views.py:66
+msgid "Profile updated successfully."
+msgstr ""
+
+#: .\apps\profiles\views.py:92
+msgid "Your password has been successfully updated."
+msgstr ""
+
+#: .\apps\users\admin.py:23
+msgid "Personal info"
+msgstr ""
+
+#: .\apps\users\admin.py:27
+msgid "Permissions"
+msgstr ""
+
+#: .\apps\users\admin.py:39
+msgid "Important dates"
+msgstr ""
+
+#: .\apps\users\apps.py:13
+msgid "Users"
+msgstr ""
+
+#: .\apps\users\managers.py:36
+msgid "The Email field must be set"
+msgstr ""
+
+#: .\apps\users\managers.py:38
+msgid "The Username field must be set"
+msgstr ""
+
+#: .\apps\users\managers.py:75
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: .\apps\users\managers.py:77
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: .\apps\users\models.py:28
+msgid "username"
+msgstr ""
+
+#: .\apps\users\models.py:32
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: .\apps\users\models.py:39
+msgid "email address"
+msgstr ""
+
+#: .\apps\users\models.py:45
+msgid "first name"
+msgstr ""
+
+#: .\apps\users\models.py:46
+msgid "last name"
+msgstr ""
+
+#: .\apps\users\models.py:48
+msgid "avatar"
+msgstr ""
+
+#: .\apps\users\models.py:52
+msgid "Upload a profile picture."
+msgstr ""
+
+#: .\apps\users\models.py:55
+msgid "active"
+msgstr ""
+
+#: .\apps\users\models.py:58
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: .\apps\users\models.py:63
+msgid "staff status"
+msgstr ""
+
+#: .\apps\users\models.py:65
+msgid "Designates whether the user can log into the admin site."
+msgstr ""
+
+#: .\apps\users\models.py:68
+msgid "email verified"
+msgstr ""
+
+#: .\apps\users\models.py:70
+msgid "Designates whether the user has verified their email address."
+msgstr ""
+
+#: .\apps\users\models.py:72
+msgid "date joined"
+msgstr ""
+
+#: .\apps\users\models.py:80
+msgid "user"
+msgstr ""
+
+#: .\apps\users\models.py:81
+msgid "users"
+msgstr ""
+
+#: .\templates\authentication\activation_complete.html:4
+msgid "Account Activated"
+msgstr ""
+
+#: .\templates\authentication\activation_complete.html:15
+msgid "Email verified!"
+msgstr ""
+
+#: .\templates\authentication\activation_complete.html:17
+msgid ""
+"Your email address has been verified. You can now log in to your account."
+msgstr ""
+
+#: .\templates\authentication\activation_complete.html:21
+msgid "Sign in now"
+msgstr ""
+
+#: .\templates\authentication\activation_invalid.html:4
+msgid "Invalid Activation Link"
+msgstr ""
+
+#: .\templates\authentication\activation_invalid.html:15
+msgid "Invalid link"
+msgstr ""
+
+#: .\templates\authentication\activation_invalid.html:17
+msgid ""
+"This activation link is invalid or has expired. Please register again or "
+"contact support."
+msgstr ""
+
+#: .\templates\authentication\activation_invalid.html:22
+msgid "Register again"
+msgstr ""
+
+#: .\templates\authentication\activation_invalid.html:26
+#: .\templates\authentication\login.html:4 .\templates\base.html:108
+#: .\templates\base.html:143
+msgid "Login"
+msgstr ""
+
+#: .\templates\authentication\activation_sent.html:4
+msgid "Activation Email Sent"
+msgstr ""
+
+#: .\templates\authentication\activation_sent.html:15
+#: .\templates\authentication\password_reset_done.html:15
+msgid "Check your email"
+msgstr ""
+
+#: .\templates\authentication\activation_sent.html:17
+msgid ""
+"We've sent you an activation link. Please check your inbox and click the "
+"link to verify your email address."
+msgstr ""
+
+#: .\templates\authentication\activation_sent.html:22
+msgid "Go to login"
+msgstr ""
+
+#: .\templates\authentication\login.html:18
+msgid "Welcome back"
+msgstr ""
+
+#: .\templates\authentication\login.html:19
+msgid "Sign in to your account"
+msgstr ""
+
+#: .\templates\authentication\login.html:57
+msgid "Forgot your password?"
+msgstr ""
+
+#: .\templates\authentication\login.html:69
+msgid "Signing in..."
+msgstr ""
+
+#: .\templates\authentication\login.html:69
+#: .\templates\authentication\register.html:89
+msgid "Sign in"
+msgstr ""
+
+#: .\templates\authentication\login.html:75
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\templates\authentication\login.html:77
+msgid "Create one"
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:4
+#: .\templates\emails\password_reset_email.html:21
+msgid "Reset Password"
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:16
+#: .\templates\authentication\password_reset_confirm.html:48
+msgid "Reset password"
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:17
+msgid "Enter your email and we'll send you a reset link"
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:36
+msgid "Sending..."
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:36
+msgid "Send reset link"
+msgstr ""
+
+#: .\templates\authentication\password_reset.html:42
+#: .\templates\authentication\password_reset_done.html:21
+msgid "Back to login"
+msgstr ""
+
+#: .\templates\authentication\password_reset_confirm.html:4
+msgid "Set New Password"
+msgstr ""
+
+#: .\templates\authentication\password_reset_confirm.html:16
+msgid "Set new password"
+msgstr ""
+
+#: .\templates\authentication\password_reset_confirm.html:17
+msgid "Enter your new password below"
+msgstr ""
+
+#: .\templates\authentication\password_reset_done.html:4
+msgid "Password Reset Sent"
+msgstr ""
+
+#: .\templates\authentication\password_reset_done.html:17
+msgid ""
+"If an account with that email exists, we've sent instructions to reset your "
+"password. Please check your inbox and spam folder."
+msgstr ""
+
+#: .\templates\authentication\register.html:4 .\templates\base.html:112
+#: .\templates\base.html:144
+msgid "Register"
+msgstr ""
+
+#: .\templates\authentication\register.html:17
+#: .\templates\authentication\register.html:81
+msgid "Create account"
+msgstr ""
+
+#: .\templates\authentication\register.html:18
+msgid "Join us today"
+msgstr ""
+
+#: .\templates\authentication\register.html:81
+msgid "Creating account..."
+msgstr ""
+
+#: .\templates\authentication\register.html:87
+msgid "Already have an account?"
+msgstr ""
+
+#: .\templates\base.html:96 .\templates\base.html:137
+#: .\templates\profiles\profile.html:4
+msgid "Profile"
+msgstr ""
+
+#: .\templates\base.html:102 .\templates\base.html:140
+msgid "Logout"
+msgstr ""
+
+#: .\templates\base.html:195
+msgid "Open source & free."
+msgstr ""
+
+#: .\templates\emails\activation_email.html:15
+msgid "Welcome!"
+msgstr ""
+
+#: .\templates\emails\activation_email.html:16
+#: .\templates\emails\password_reset_email.html:16
+msgid "Hi"
+msgstr ""
+
+#: .\templates\emails\activation_email.html:17
+msgid ""
+"Thank you for registering. Please click the button below to verify your "
+"email address and activate your account:"
+msgstr ""
+
+#: .\templates\emails\activation_email.html:21
+msgid "Verify Email"
+msgstr ""
+
+#: .\templates\emails\activation_email.html:26
+#: .\templates\emails\password_reset_email.html:26
+msgid "If the button doesn't work, copy and paste this link into your browser:"
+msgstr ""
+
+#: .\templates\emails\activation_email.html:31
+msgid "This link will expire in 24 hours."
+msgstr ""
+
+#: .\templates\emails\activation_email.html:32
+msgid "If you didn't create an account, please ignore this email."
+msgstr ""
+
+#: .\templates\emails\activation_subject.txt:1
+msgid "Activate your account"
+msgstr ""
+
+#: .\templates\emails\password_reset_email.html:15
+msgid "Password Reset"
+msgstr ""
+
+#: .\templates\emails\password_reset_email.html:17
+msgid ""
+"You requested a password reset. Click the button below to set a new password:"
+msgstr ""
+
+#: .\templates\emails\password_reset_email.html:31
+msgid "This link will expire shortly."
+msgstr ""
+
+#: .\templates\emails\password_reset_email.html:32
+msgid "If you didn't request a password reset, please ignore this email."
+msgstr ""
+
+#: .\templates\emails\password_reset_subject.txt:1
+msgid "Reset your password"
+msgstr ""
+
+#: .\templates\profiles\password_change.html:4
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\profiles\password_change.html:16
+#: .\templates\profiles\profile.html:97
+msgid "Change password"
+msgstr ""
+
+#: .\templates\profiles\password_change.html:17
+msgid "Create a new, strong password"
+msgstr ""
+
+#: .\templates\profiles\password_change.html:55
+msgid "Updating..."
+msgstr ""
+
+#: .\templates\profiles\password_change.html:55
+msgid "Update password"
+msgstr ""
+
+#: .\templates\profiles\password_change.html:59
+#: .\templates\profiles\profile_update.html:126
+msgid "Cancel"
+msgstr ""
+
+#: .\templates\profiles\profile.html:31
+msgid "Username"
+msgstr ""
+
+#: .\templates\profiles\profile.html:35
+msgid "First name"
+msgstr ""
+
+#: .\templates\profiles\profile.html:39
+msgid "Last name"
+msgstr ""
+
+#: .\templates\profiles\profile.html:47
+msgid "Email verified"
+msgstr ""
+
+#: .\templates\profiles\profile.html:52
+msgid "Verified"
+msgstr ""
+
+#: .\templates\profiles\profile.html:57
+msgid "Not verified"
+msgstr ""
+
+#: .\templates\profiles\profile.html:66
+msgid "Resend email"
+msgstr ""
+
+#: .\templates\profiles\profile.html:73
+msgid "Member since"
+msgstr ""
+
+#: .\templates\profiles\profile.html:77
+msgid "Last login"
+msgstr ""
+
+#: .\templates\profiles\profile.html:89
+#: .\templates\profiles\profile_update.html:11
+msgid "Edit profile"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:4
+msgid "Edit Profile"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:12
+msgid "Update your personal information"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:46
+msgid "Upload"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:53
+msgid "Change photo"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:58
+msgid "Remove"
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:122
+msgid "Saving..."
+msgstr ""
+
+#: .\templates\profiles\profile_update.html:122
+msgid "Save changes"
+msgstr ""

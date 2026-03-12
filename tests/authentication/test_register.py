@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-
+from apps.users.models import CustomUser
 from apps.authentication.tokens import email_verification_token
 
 User = get_user_model()
@@ -38,7 +38,7 @@ def test_register_success(client):
     response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 302
     assert response.url == reverse("authentication:activation_sent")
-    new_user = User.objects.get(email="newuser@example.com")
+    new_user : CustomUser = User.objects.get(email="newuser@example.com") # type: ignore[assignment]
     assert not new_user.is_email_verified
 
 

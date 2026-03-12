@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
-
+from apps.users.models import CustomUser
 from apps.authentication import services
 
 User = get_user_model()
@@ -22,14 +22,14 @@ def test_register_user_sends_email(monkeypatch):
     monkeypatch.setattr(services, "send_activation_email", fake_send_activation_email)
     req = HttpRequest()
     req.method = "GET"
-    user = services.register_user(
+    user : CustomUser = services.register_user(
         username="foo",
         email="foo@example.com",
         password="pass",
         first_name="",
         last_name="",
         request=req,
-    )
+    ) # type: ignore[assignment]
     assert user.email == "foo@example.com"
     assert not user.is_email_verified
     assert called["args"][0] is user
