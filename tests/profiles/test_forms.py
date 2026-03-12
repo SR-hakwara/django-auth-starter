@@ -8,12 +8,15 @@ from apps.profiles.forms import ProfileUpdateForm
 User = get_user_model()
 manager = cast(CustomUserManager, User.objects)
 
+
 @pytest.mark.django_db
 def test_profile_update_form_email_conflict(user):
     # create a second account, then try to update the first user to that email
     from django.contrib.auth import get_user_model
 
-    other = manager.create_user(username="other", email="other@example.com", password="x")
+    other = manager.create_user(
+        username="other", email="other@example.com", password="x"
+    )
 
     form = ProfileUpdateForm(
         data={

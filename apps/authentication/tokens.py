@@ -1,11 +1,14 @@
 """Email token generator extending PasswordResetTokenGenerator."""
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.auth import get_user_model
 
 from typing import TYPE_CHECKING,cast
 
 if TYPE_CHECKING:
     from apps.users.models import CustomUser  # custom user
+
+User = get_user_model()
 
 
 class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
@@ -19,7 +22,7 @@ class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
       outstanding verification tokens.
     """
 
-    def _make_hash_value(self, user: "CustomUser", timestamp: int) -> str:
+    def _make_hash_value(self, user: User , timestamp: int) -> str:
         """Build the string that is hashed to create the token.
 
         Including ``is_email_verified`` in the hash ensures the token is

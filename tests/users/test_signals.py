@@ -7,6 +7,7 @@ from typing import cast
 User = get_user_model()
 manager = cast(CustomUserManager, User.objects)
 
+
 @pytest.mark.django_db
 def test_avatar_deleted_on_user_delete(monkeypatch):
     called = False

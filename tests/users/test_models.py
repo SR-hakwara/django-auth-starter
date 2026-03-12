@@ -10,7 +10,6 @@ User = get_user_model()
 manager = cast(CustomUserManager, User.objects)
 
 
-
 @pytest.mark.django_db
 def test_create_user():
     """Test creating a regular user with email and username."""

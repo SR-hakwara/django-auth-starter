@@ -38,7 +38,7 @@ def test_register_success(client):
     response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 302
     assert response.url == reverse("authentication:activation_sent")
-    new_user : CustomUser = User.objects.get(email="newuser@example.com") # type: ignore[assignment]
+    new_user: CustomUser = User.objects.get(email="newuser@example.com")  # type: ignore[assignment]
     assert not new_user.is_email_verified
 
 
@@ -98,10 +98,11 @@ def test_register_activation_sent_page_loads(client):
 
 
 @pytest.mark.django_db
-
 def test_activate_account_flow(client, user):
     # invalid UID/token should show invalid page
-    bad_url = reverse("authentication:activate", kwargs={"uidb64": "oops", "token": "tok"})
+    bad_url = reverse(
+        "authentication:activate", kwargs={"uidb64": "oops", "token": "tok"}
+    )
     res = client.get(bad_url)
     assert res.status_code == 200
     assert "invalid" in res.content.decode().lower()
@@ -109,7 +110,9 @@ def test_activate_account_flow(client, user):
     # valid link activates the user
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = email_verification_token.make_token(user)
-    good_url = reverse("authentication:activate", kwargs={"uidb64": uid, "token": token})
+    good_url = reverse(
+        "authentication:activate", kwargs={"uidb64": uid, "token": token}
+    )
     res = client.get(good_url)
     assert res.status_code == 200
     user.refresh_from_db()

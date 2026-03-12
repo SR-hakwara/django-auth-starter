@@ -1,6 +1,6 @@
 """Views for the profiles app."""
 
-from typing import cast
+from typing import cast, TYPE_CHECKING
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -15,6 +15,9 @@ from .forms import PasswordChangeForm, ProfileUpdateForm
 from .services import change_password, update_profile
 
 User = get_user_model()
+
+if TYPE_CHECKING:
+    from apps.users.models import CustomUser  # custom user
 
 
 @login_required
@@ -75,9 +78,9 @@ def profile_update_view(request: HttpRequest) -> HttpResponse:
                 if "avatar" in form.changed_data
                 else None
             )
-
+            user = cast("CustomUser", request.user)
             update_profile(
-                user=request.user,
+                user=user,
                 username=form.cleaned_data.get("username"),
                 first_name=form.cleaned_data["first_name"],
                 last_name=form.cleaned_data["last_name"],
@@ -88,7 +91,7 @@ def profile_update_view(request: HttpRequest) -> HttpResponse:
 
             # If email was changed, it requires re-verification
             if "email" in form.changed_data:
-                send_activation_email(user=request.user, request=request)
+                send_activation_email(user=user, request=request)
                 messages.warning(
                     request,
                     _(
@@ -131,7 +134,7 @@ def password_change_view(request: HttpRequest) -> HttpResponse:
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             # narrow the type so the checker knows `user` isn’t AnonymousUser
-            user = cast(User, request.user)
+            user = cast("CustomUser", request.user)
             change_password(
                 user=user,
                 old_password=form.cleaned_data["old_password"],

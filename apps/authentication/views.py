@@ -223,7 +223,7 @@ def activate_account_view(
         user = None
 
     if user is not None and email_verification_token.check_token(user, token):
-        user=cast("CustomUser", user)
+        user = cast("CustomUser", user)
         activate_user(user=user)
         messages.success(
             request, _("Your email has been verified! You can now log in.")

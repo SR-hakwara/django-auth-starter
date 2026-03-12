@@ -27,11 +27,11 @@ if env_file.exists():
 # ---------------------------------------------------------------------------
 # Core Settings
 # ---------------------------------------------------------------------------
-SECRET_KEY: str = env("DJANGO_SECRET_KEY")
+SECRET_KEY: str = env("DJANGO_SECRET_KEY") #type: ignore[assignment]
 
-DEBUG: bool = env("DJANGO_DEBUG")
+DEBUG: bool = env("DJANGO_DEBUG") #type: ignore[assignment]
 
-ALLOWED_HOSTS: list[str] = env("DJANGO_ALLOWED_HOSTS")
+ALLOWED_HOSTS: list[str] = env("DJANGO_ALLOWED_HOSTS") #type: ignore[assignment]
 
 # ---------------------------------------------------------------------------
 # Application Definition
@@ -110,7 +110,7 @@ ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
     "default": env.db_url(
         "DATABASE_URL",
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}", #type: ignore[assignment]
     ),
 }
 
@@ -190,9 +190,9 @@ STORAGES = {
 # ---------------------------------------------------------------------------
 EMAIL_BACKEND = env(
     "EMAIL_BACKEND",
-    default="django.core.mail.backends.console.EmailBackend",
+    default="django.core.mail.backends.console.EmailBackend", #type: ignore[assignment]
 )
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@example.com")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@example.com") #type: ignore[assignment]
 
 # ---------------------------------------------------------------------------
 # Cache (default: LocMemCache — overridden per environment)

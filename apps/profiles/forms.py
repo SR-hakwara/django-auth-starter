@@ -1,9 +1,12 @@
 """Forms for the profiles app."""
 
+from typing import Any, Optional
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm as DjangoPasswordChangeForm
 from django.utils.translation import gettext_lazy as _
+from django.core.files.uploadedfile import UploadedFile
 
 from apps.core.constants import INPUT_CSS
 from apps.core.validators import validate_avatar
@@ -31,7 +34,7 @@ class ProfileUpdateForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, *args: object, **kwargs: object) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialise the form and annotate the email field with a help text.
 
         The help text reminds users that changing their email will trigger
@@ -42,9 +45,8 @@ class ProfileUpdateForm(forms.ModelForm):
             "Changing your email will require re-verification."
         )
 
-    def clean_avatar(self):
+    def clean_avatar(self) -> Optional[UploadedFile]:
         """Validate avatar file size and type — only for newly uploaded files."""
-        from django.core.files.uploadedfile import UploadedFile
 
         avatar = self.cleaned_data.get("avatar")
         # Only run validation on a *new* upload (UploadedFile).

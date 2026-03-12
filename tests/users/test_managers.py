@@ -19,6 +19,13 @@ def test_create_user_requires_email_and_username():
 def test_create_superuser_flags_validation():
     mgr = CustomUserManager()
     with pytest.raises(ValueError):
-        mgr.create_superuser(username="admin", email="admin@example.com", password="pass", is_staff=False)
+        mgr.create_superuser(
+            username="admin", email="admin@example.com", password="pass", is_staff=False
+        )
     with pytest.raises(ValueError):
-        mgr.create_superuser(username="admin", email="admin@example.com", password="pass", is_superuser=False)
+        mgr.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="pass",
+            is_superuser=False,
+        )

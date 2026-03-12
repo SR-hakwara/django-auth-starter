@@ -108,7 +108,9 @@ def update_profile(
         user.save(update_fields=update_fields)
 
 
-def change_password(*, user: "CustomUser", old_password: str, new_password: str) -> None:
+def change_password(
+    *, user: "CustomUser", old_password: str, new_password: str
+) -> None:
     """Change a user's password after verifying the current one.
 
     Only the ``password`` column is written so other fields are untouched.
