@@ -169,7 +169,7 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         logout(request)
         messages.info(request, _("You have been logged out."))
-    return redirect("authentication:login")
+    return redirect("home")
 
 
 def activation_sent_view(request: HttpRequest) -> HttpResponse:

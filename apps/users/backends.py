@@ -65,3 +65,4 @@ class EmailOrUsernameBackend(ModelBackend):
             return user
 
         return None
+    
