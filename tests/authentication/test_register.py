@@ -38,7 +38,7 @@ def test_register_success(client):
     response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 302
     assert response.url == reverse("authentication:activation_sent")
-    new_user: CustomUser = User.objects.get(email="newuser@example.com")
+    new_user: CustomUser = CustomUser.objects.get(email="newuser@example.com")
     assert not new_user.is_email_verified
 
 
