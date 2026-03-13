@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.http import HttpRequest, JsonResponse
 from django.urls import include, path
 
+from apps.core import views as core_views
+
 
 def health_check(request: HttpRequest) -> JsonResponse:
     """Lightweight health check for container orchestration probes."""
@@ -13,6 +15,7 @@ def health_check(request: HttpRequest) -> JsonResponse:
 
 
 urlpatterns = [
+    path("", core_views.home_view, name="home"),
     path("health/", health_check, name="health_check"),
     path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),

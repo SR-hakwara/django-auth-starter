@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-13 01:18+0000\n"
+"POT-Creation-Date: 2026-03-13 03:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,34 +142,34 @@ msgstr ""
 msgid "Core Utilities"
 msgstr "Utilitaires du noyau"
 
-#: .\apps\core\validators.py:46
+#: .\apps\core\validators.py:47
 #, python-format
 msgid "Avatar file size must not exceed 2 MB. Your file is %(size)s MB."
 msgstr ""
 "La taille du fichier d’avatar ne doit pas dépasser 2 Mo. Votre fichier fait "
 "%(size)s Mo."
 
-#: .\apps\core\validators.py:58
+#: .\apps\core\validators.py:59
 msgid "Unsupported image type. Allowed formats: JPEG, PNG, WebP."
 msgstr "Type d’image non pris en charge. Formats autorisés : JPEG, PNG, WebP."
 
-#: .\apps\core\validators.py:101
+#: .\apps\core\validators.py:102
 msgid "Password must contain at least one uppercase letter."
 msgstr "Le mot de passe doit contenir au moins une lettre majuscule."
 
-#: .\apps\core\validators.py:108
+#: .\apps\core\validators.py:109
 msgid "Password must contain at least one lowercase letter."
 msgstr "Le mot de passe doit contenir au moins une lettre minuscule."
 
-#: .\apps\core\validators.py:115
+#: .\apps\core\validators.py:116
 msgid "Password must contain at least one digit."
 msgstr "Le mot de passe doit contenir au moins un chiffre."
 
-#: .\apps\core\validators.py:122
+#: .\apps\core\validators.py:123
 msgid "Password must contain at least one special character."
 msgstr "Le mot de passe doit contenir au moins un caractère spécial."
 
-#: .\apps\core\validators.py:131
+#: .\apps\core\validators.py:134
 msgid ""
 "Your password must contain at least one uppercase letter, one lowercase "
 "letter, one digit, and one special character."
@@ -459,7 +459,7 @@ msgstr ""
 "et le dossier spam."
 
 #: .\templates\authentication\register.html:4 .\templates\base.html:112
-#: .\templates\base.html:144
+#: .\templates\base.html:144 .\templates\home.html:19
 msgid "Register"
 msgstr "S'inscrire"
 
@@ -555,6 +555,49 @@ msgstr ""
 #: .\templates\emails\password_reset_subject.txt:1
 msgid "Reset your password"
 msgstr "Réinitialisez votre mot de passe"
+
+#: .\templates\home.html:4
+msgid "Home"
+msgstr "Accueil"
+
+#: .\templates\home.html:10
+msgid "Welcome to django-auth-basic"
+msgstr "Bienvenue sur django-auth-basic"
+
+#: .\templates\home.html:12
+msgid "A minimal starter kit for Django authentication flows."
+msgstr ""
+"Une configuration de départ minimale pour les flux d'authentification Django."
+
+#: .\templates\home.html:16
+msgid "Log in"
+msgstr "Connexion"
+
+#: .\templates\home.html:26
+msgid "Why choose this starter?"
+msgstr "Pourquoi choisir ce starter ?"
+
+#: .\templates\home.html:28
+#, fuzzy
+#| msgid "Email or Username"
+msgid "Email/password + username login"
+msgstr "Connexion par e-mail/mot de passe + nom d'utilisateur"
+
+#: .\templates\home.html:29
+#, fuzzy
+#| msgid "Account Activated"
+msgid "Account activation via email"
+msgstr "Activation de compte par e-mail"
+
+#: .\templates\home.html:30
+#, fuzzy
+#| msgid "Password Reset Sent"
+msgid "Password reset and change flows"
+msgstr "Flux de réinitialisation et de changement de mot de passe"
+
+#: .\templates\home.html:31
+msgid "Custom user model and profile support"
+msgstr "Support d'un modèle d'utilisateur personnalisé et profil"
 
 #: .\templates\profiles\password_change.html:4
 msgid "Change Password"
