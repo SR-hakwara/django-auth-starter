@@ -1,5 +1,6 @@
 # django-auth-basic
 
+*Version `1.5.0`*  
 A modern, production-ready Django authentication starter kit. Free, open source, and multilingual.
 
 ![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)
@@ -68,6 +69,10 @@ auth_starter_basic/
 ---
 
 ## Quick Start
+
+### 1. Clone & Setup
+
+> The current release is encoded in Python as `import apps; print(apps.__version__)`.
 
 ### 1. Clone & Setup
 
