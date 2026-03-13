@@ -133,6 +133,32 @@ def test_password_reset_confirm_valid_token(client, user):
 
 
 @pytest.mark.django_db
+def test_password_reset_confirm_all_errors_displayed(client, user):
+    """All complexity errors must appear in the reset-confirm HTML, not just the first."""
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+
+    url = reverse(
+        "authentication:password_reset_confirm", kwargs={"uidb64": uid, "token": token}
+    )
+    response = client.post(
+        url,
+        {
+            # all lowercase, no digit, no special → 3 complexity errors
+            "new_password1": "alllowercase",
+            "new_password2": "alllowercase",
+        },
+    )
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert "uppercase" in content.lower()
+    assert "digit" in content.lower()
+    assert "special" in content.lower()
+    user.refresh_from_db()
+    assert not user.check_password("alllowercase")
+
+
+@pytest.mark.django_db
 def test_password_reset_confirm_invalid_token(client, user):
     """Test that an invalid token redirects back to password reset."""
     uid = urlsafe_base64_encode(force_bytes(user.pk))

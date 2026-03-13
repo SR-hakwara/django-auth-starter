@@ -170,3 +170,23 @@ def test_register_weak_password_no_digit_rejected(client):
     response = client.post(reverse("authentication:register"), data)
     assert response.status_code == 200
     assert not User.objects.filter(email="weak3@example.com").exists()
+
+
+@pytest.mark.django_db
+def test_register_all_password_errors_displayed(client):
+    """When the password violates multiple rules, all errors must appear in the HTML."""
+    data = {
+        "username": "weakuser4",
+        "email": "weak4@example.com",
+        "first_name": "Weak",
+        "last_name": "User",
+        # all lowercase, no digit, no special → triggers 3 complexity errors
+        "password1": "alllowercase",
+        "password2": "alllowercase",
+    }
+    response = client.post(reverse("authentication:register"), data)
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert "uppercase" in content.lower()
+    assert "digit" in content.lower()
+    assert "special" in content.lower()

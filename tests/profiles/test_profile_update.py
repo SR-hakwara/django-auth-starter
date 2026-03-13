@@ -285,3 +285,25 @@ def test_password_change_weak_no_digit_rejected(client, user):
     assert response.status_code == 200
     user.refresh_from_db()
     assert user.check_password("SecurePass123!")
+
+
+@pytest.mark.django_db
+def test_password_change_all_errors_displayed(client, user):
+    """All complexity errors must appear in the HTML, not just the first one."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.post(
+        reverse("profiles:password_change"),
+        {
+            "old_password": "SecurePass123!",
+            # all lowercase, no digit, no special → 3 complexity errors
+            "new_password1": "alllowercase",
+            "new_password2": "alllowercase",
+        },
+    )
+    assert response.status_code == 200
+    content = response.content.decode()
+    assert "uppercase" in content.lower()
+    assert "digit" in content.lower()
+    assert "special" in content.lower()
+    user.refresh_from_db()
+    assert user.check_password("SecurePass123!")
