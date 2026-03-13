@@ -1,5 +1,8 @@
 """Core validators for the application."""
 
+import re
+from typing import cast
+
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import UploadedFile
 from django.utils.translation import gettext_lazy as _
@@ -80,3 +83,55 @@ def _detect_mime(header: bytes) -> str:
     if header[:4] in (b"RIFF",) and header[8:12] == b"WEBP":
         return "image/webp"
     return "unknown"
+
+
+class PasswordComplexityValidator:
+    """Enforce that passwords contain at least one uppercase letter, one
+    lowercase letter, one digit, and one special character.
+
+    This validator is intended to be listed in ``AUTH_PASSWORD_VALIDATORS``
+    so it is applied automatically by Django's ``validate_password`` helper,
+    covering both the registration form and the password-change flow.
+    """
+
+    def validate(self, password: str, user: object = None) -> None:
+        errors: list[ValidationError] = []
+        if not re.search(r"[A-Z]", password):
+            errors.append(
+                ValidationError(
+                    _("Password must contain at least one uppercase letter."),
+                    code="password_no_upper",
+                )
+            )
+        if not re.search(r"[a-z]", password):
+            errors.append(
+                ValidationError(
+                    _("Password must contain at least one lowercase letter."),
+                    code="password_no_lower",
+                )
+            )
+        if not re.search(r"\d", password):
+            errors.append(
+                ValidationError(
+                    _("Password must contain at least one digit."),
+                    code="password_no_digit",
+                )
+            )
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>_\-+=\[\]\\;'/`~]", password):
+            errors.append(
+                ValidationError(
+                    _("Password must contain at least one special character."),
+                    code="password_no_special",
+                )
+            )
+        if errors:
+            raise ValidationError(errors)
+
+    def get_help_text(self) -> str:
+        return cast(
+            str,
+            _(
+                "Your password must contain at least one uppercase letter, one lowercase "
+                "letter, one digit, and one special character."
+            ),
+        )

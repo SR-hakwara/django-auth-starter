@@ -8,6 +8,7 @@ from django.contrib.auth.forms import (
     AuthenticationForm,
     SetPasswordForm,
 )
+from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.constants import INPUT_CSS
@@ -100,13 +101,14 @@ class RegisterForm(forms.ModelForm):  # type: ignore[type-arg]
         }
 
     def clean_password2(self) -> str | None:
-        """Verify that both password fields are identical.
+        """Verify that both password fields are identical and meet complexity rules.
 
         Returns:
             The confirmed password value.
 
         Raises:
-            ValidationError: If ``password1`` and ``password2`` do not match.
+            ValidationError: If ``password1`` and ``password2`` do not match,
+                or if the password fails ``AUTH_PASSWORD_VALIDATORS``.
         """
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
@@ -114,6 +116,11 @@ class RegisterForm(forms.ModelForm):  # type: ignore[type-arg]
             raise forms.ValidationError(
                 _("The two password fields didn't match."), code="password_mismatch"
             )
+        if password2:
+            # Build a partial user instance so UserAttributeSimilarityValidator
+            # can compare the password against the form's own field values.
+            user = self.instance if self.instance.pk else None
+            validate_password(password2, user)
         return cast(str, password2) if password2 is not None else None
 
     def clean_email(self) -> str:

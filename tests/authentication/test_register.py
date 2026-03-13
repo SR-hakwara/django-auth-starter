@@ -117,3 +117,56 @@ def test_activate_account_flow(client, user):
     assert res.status_code == 200
     user.refresh_from_db()
     assert user.is_email_verified
+
+
+# ---------------------------------------------------------------------------
+# Password complexity enforcement on registration
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_register_weak_password_no_uppercase_rejected(client):
+    """Registration should fail when the password has no uppercase letter."""
+    data = {
+        "username": "weakuser",
+        "email": "weak@example.com",
+        "first_name": "Weak",
+        "last_name": "User",
+        "password1": "weakpass1!",
+        "password2": "weakpass1!",
+    }
+    response = client.post(reverse("authentication:register"), data)
+    assert response.status_code == 200
+    assert not User.objects.filter(email="weak@example.com").exists()
+
+
+@pytest.mark.django_db
+def test_register_weak_password_no_special_char_rejected(client):
+    """Registration should fail when the password has no special character."""
+    data = {
+        "username": "weakuser2",
+        "email": "weak2@example.com",
+        "first_name": "Weak",
+        "last_name": "User",
+        "password1": "WeakPass1234",
+        "password2": "WeakPass1234",
+    }
+    response = client.post(reverse("authentication:register"), data)
+    assert response.status_code == 200
+    assert not User.objects.filter(email="weak2@example.com").exists()
+
+
+@pytest.mark.django_db
+def test_register_weak_password_no_digit_rejected(client):
+    """Registration should fail when the password has no digit."""
+    data = {
+        "username": "weakuser3",
+        "email": "weak3@example.com",
+        "first_name": "Weak",
+        "last_name": "User",
+        "password1": "WeakPassword!",
+        "password2": "WeakPassword!",
+    }
+    response = client.post(reverse("authentication:register"), data)
+    assert response.status_code == 200
+    assert not User.objects.filter(email="weak3@example.com").exists()

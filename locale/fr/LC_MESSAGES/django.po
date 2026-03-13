@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 03:19+0000\n"
+"POT-Creation-Date: 2026-03-13 01:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,130 +22,160 @@ msgstr ""
 msgid "Authentication"
 msgstr "Authentification"
 
-#: .\apps\authentication\forms.py:21
+#: .\apps\authentication\forms.py:23
 msgid "Email or Username"
 msgstr "E-mail ou nom d’utilisateur"
 
-#: .\apps\authentication\forms.py:25
+#: .\apps\authentication\forms.py:27
 msgid "you@example.com or username"
 msgstr "vous@example.com ou nom d’utilisateur"
 
-#: .\apps\authentication\forms.py:32 .\apps\authentication\forms.py:47
+#: .\apps\authentication\forms.py:34 .\apps\authentication\forms.py:49
 msgid "Password"
 msgstr "Mot de passe"
 
-#: .\apps\authentication\forms.py:36 .\apps\authentication\forms.py:51
-#: .\apps\authentication\forms.py:61 .\apps\authentication\forms.py:150
-#: .\apps\authentication\forms.py:160 .\apps\profiles\forms.py:78
-#: .\apps\profiles\forms.py:88 .\apps\profiles\forms.py:98
+#: .\apps\authentication\forms.py:38 .\apps\authentication\forms.py:53
+#: .\apps\authentication\forms.py:63 .\apps\authentication\forms.py:189
+#: .\apps\authentication\forms.py:199 .\apps\profiles\forms.py:92
+#: .\apps\profiles\forms.py:102 .\apps\profiles\forms.py:112
 msgid "••••••••"
 msgstr "••••••••"
 
-#: .\apps\authentication\forms.py:57
+#: .\apps\authentication\forms.py:59
 msgid "Confirm password"
 msgstr "Confirmer le mot de passe"
 
-#: .\apps\authentication\forms.py:74
+#: .\apps\authentication\forms.py:76
 msgid "johndoe"
 msgstr "johndoe"
 
-#: .\apps\authentication\forms.py:81 .\apps\authentication\forms.py:135
+#: .\apps\authentication\forms.py:83 .\apps\authentication\forms.py:174
 msgid "you@example.com"
 msgstr "vous@example.com"
 
-#: .\apps\authentication\forms.py:88
+#: .\apps\authentication\forms.py:90
 msgid "John"
 msgstr "John"
 
-#: .\apps\authentication\forms.py:95
+#: .\apps\authentication\forms.py:97
 msgid "Doe"
 msgstr "Doe"
 
-#: .\apps\authentication\forms.py:106
+#: .\apps\authentication\forms.py:117
 msgid "The two password fields didn't match."
 msgstr "Les deux champs de mot de passe ne correspondent pas."
 
-#: .\apps\authentication\forms.py:114 .\apps\profiles\forms.py:53
-#: .\apps\users\models.py:42
+#: .\apps\authentication\forms.py:142 .\apps\profiles\forms.py:67
+#: .\apps\users\models.py:54
 msgid "A user with that email already exists."
 msgstr "Un utilisateur avec cet e‑mail existe déjà."
 
-#: .\apps\authentication\forms.py:122 .\apps\profiles\forms.py:64
-#: .\apps\users\models.py:35
+#: .\apps\authentication\forms.py:161 .\apps\profiles\forms.py:78
+#: .\apps\users\models.py:47
 msgid "A user with that username already exists."
 msgstr "Un utilisateur avec ce nom d’utilisateur existe déjà."
 
-#: .\apps\authentication\forms.py:131 .\templates\profiles\profile.html:43
+#: .\apps\authentication\forms.py:170 .\templates\profiles\profile.html:43
 msgid "Email"
 msgstr "E-mail"
 
-#: .\apps\authentication\forms.py:146 .\apps\profiles\forms.py:84
+#: .\apps\authentication\forms.py:185 .\apps\profiles\forms.py:98
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
-#: .\apps\authentication\forms.py:156 .\apps\profiles\forms.py:94
+#: .\apps\authentication\forms.py:195 .\apps\profiles\forms.py:108
 msgid "Confirm new password"
 msgstr "Confirmer le nouveau mot de passe"
 
-#: .\apps\authentication\views.py:44
+#: .\apps\authentication\views.py:74
 msgid "Too many login attempts. Please try again later."
 msgstr "Trop de tentatives de connexion. Veuillez réessayer plus tard."
 
-#: .\apps\authentication\views.py:55
+#: .\apps\authentication\views.py:89
 #, python-format
 msgid "Welcome back, %(name)s!"
 msgstr "Bon retour, %(name)s !"
 
-#: .\apps\authentication\views.py:91
+#: .\apps\authentication\views.py:143
 msgid "Account created! Please check your email to activate your account."
-msgstr "Compte créé ! Veuillez vérifier votre courrier pour activer votre compte."
+msgstr ""
+"Compte créé ! Veuillez vérifier votre courrier pour activer votre compte."
 
-#: .\apps\authentication\views.py:104
+#: .\apps\authentication\views.py:171
 msgid "You have been logged out."
 msgstr "Vous avez été déconnecté."
 
-#: .\apps\authentication\views.py:126
+#: .\apps\authentication\views.py:228
 msgid "Your email has been verified! You can now log in."
 msgstr "Votre e‑mail a été vérifié ! Vous pouvez maintenant vous connecter."
 
-#: .\apps\authentication\views.py:139 .\apps\authentication\views.py:157
+#: .\apps\authentication\views.py:257 .\apps\authentication\views.py:302
 msgid "Too many requests. Please try again later."
 msgstr "Trop de requêtes. Veuillez réessayer plus tard."
 
-#: .\apps\authentication\views.py:143
+#: .\apps\authentication\views.py:263
 msgid "Your email is already verified."
 msgstr "Votre e‑mail est déjà vérifié."
 
-#: .\apps\authentication\views.py:148
+#: .\apps\authentication\views.py:268
 #, python-format
 msgid "A new verification email has been sent to %(email)s."
 msgstr "Un nouvel e‑mail de vérification a été envoyé à %(email)s."
 
-#: .\apps\authentication\views.py:170
+#: .\apps\authentication\views.py:315
 msgid ""
 "If an account with that email exists, a password reset link has been sent."
-msgstr "Si un compte avec cet e‑mail existe, un lien de réinitialisation a été envoyé."
+msgstr ""
+"Si un compte avec cet e‑mail existe, un lien de réinitialisation a été "
+"envoyé."
 
-#: .\apps\authentication\views.py:197
+#: .\apps\authentication\views.py:379
 msgid "This password reset link is invalid or has expired."
 msgstr "Ce lien de réinitialisation est invalide ou a expiré."
 
-#: .\apps\authentication\views.py:206
+#: .\apps\authentication\views.py:388
 msgid "Your password has been reset. You can now log in."
-msgstr "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter."
+msgstr ""
+"Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter."
 
 #: .\apps\core\apps.py:7
 msgid "Core Utilities"
 msgstr "Utilitaires du noyau"
 
-#: .\apps\core\validators.py:14
+#: .\apps\core\validators.py:46
 #, python-format
 msgid "Avatar file size must not exceed 2 MB. Your file is %(size)s MB."
-msgstr "La taille du fichier d’avatar ne doit pas dépasser 2 Mo. Votre fichier fait %(size)s Mo."
+msgstr ""
+"La taille du fichier d’avatar ne doit pas dépasser 2 Mo. Votre fichier fait "
+"%(size)s Mo."
 
-#: .\apps\core\validators.py:26
+#: .\apps\core\validators.py:58
 msgid "Unsupported image type. Allowed formats: JPEG, PNG, WebP."
 msgstr "Type d’image non pris en charge. Formats autorisés : JPEG, PNG, WebP."
+
+#: .\apps\core\validators.py:101
+msgid "Password must contain at least one uppercase letter."
+msgstr "Le mot de passe doit contenir au moins une lettre majuscule."
+
+#: .\apps\core\validators.py:108
+msgid "Password must contain at least one lowercase letter."
+msgstr "Le mot de passe doit contenir au moins une lettre minuscule."
+
+#: .\apps\core\validators.py:115
+msgid "Password must contain at least one digit."
+msgstr "Le mot de passe doit contenir au moins un chiffre."
+
+#: .\apps\core\validators.py:122
+msgid "Password must contain at least one special character."
+msgstr "Le mot de passe doit contenir au moins un caractère spécial."
+
+#: .\apps\core\validators.py:131
+msgid ""
+"Your password must contain at least one uppercase letter, one lowercase "
+"letter, one digit, and one special character."
+msgstr ""
+"Votre mot de passe doit contenir au moins une lettre majuscule, une lettre "
+"minuscule, un chiffre et un caractère spécial."
 
 #: .\apps\emails\apps.py:7
 msgid "Emails"
@@ -155,37 +185,39 @@ msgstr "E-mails"
 msgid "Profiles"
 msgstr "Profils"
 
-#: .\apps\profiles\forms.py:37
+#: .\apps\profiles\forms.py:45
 msgid "Changing your email will require re-verification."
 msgstr "Changer votre e‑mail nécessitera une nouvelle vérification."
 
-#: .\apps\profiles\forms.py:74
+#: .\apps\profiles\forms.py:88
 msgid "Current password"
 msgstr "Mot de passe actuel"
 
-#: .\apps\profiles\views.py:62
+#: .\apps\profiles\views.py:98
 msgid ""
 "Profile updated. A verification link has been sent to your new email "
 "address. Please verify it to regain full access."
-msgstr "Profil mis à jour. Un lien de vérification a été envoyé à votre nouvelle adresse e‑mail. Veuillez le vérifier pour retrouver un accès complet."
+msgstr ""
+"Profil mis à jour. Un lien de vérification a été envoyé à votre nouvelle "
+"adresse e‑mail. Veuillez le vérifier pour retrouver un accès complet."
 
-#: .\apps\profiles\views.py:66
+#: .\apps\profiles\views.py:102
 msgid "Profile updated successfully."
 msgstr "Profil mis à jour avec succès."
 
-#: .\apps\profiles\views.py:92
+#: .\apps\profiles\views.py:147
 msgid "Your password has been successfully updated."
 msgstr "Votre mot de passe a été mis à jour avec succès."
 
-#: .\apps\users\admin.py:23
+#: .\apps\users\admin.py:29
 msgid "Personal info"
 msgstr "Infos personnelles"
 
-#: .\apps\users\admin.py:27
+#: .\apps\users\admin.py:33
 msgid "Permissions"
 msgstr "Autorisations"
 
-#: .\apps\users\admin.py:39
+#: .\apps\users\admin.py:45
 msgid "Important dates"
 msgstr "Dates importantes"
 
@@ -193,85 +225,89 @@ msgstr "Dates importantes"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: .\apps\users\managers.py:36
+#: .\apps\users\managers.py:41
 msgid "The Email field must be set"
 msgstr "Le champ E-mail doit être renseigné."
 
-#: .\apps\users\managers.py:38
+#: .\apps\users\managers.py:43
 msgid "The Username field must be set"
 msgstr "Le champ Nom d’utilisateur doit être renseigné."
 
-#: .\apps\users\managers.py:75
+#: .\apps\users\managers.py:80
 msgid "Superuser must have is_staff=True."
 msgstr "Le superutilisateur doit avoir is_staff=True."
 
-#: .\apps\users\managers.py:77
+#: .\apps\users\managers.py:82
 msgid "Superuser must have is_superuser=True."
 msgstr "Le superutilisateur doit avoir is_superuser=True."
 
-#: .\apps\users\models.py:28
+#: .\apps\users\models.py:40
 msgid "username"
 msgstr "nom d’utilisateur"
 
-#: .\apps\users\models.py:32
+#: .\apps\users\models.py:44
 msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "Obligatoire. 150 caractères ou moins. Lettres, chiffres et @/./+/-/_ seulement."
+msgstr ""
+"Obligatoire. 150 caractères ou moins. Lettres, chiffres et @/./+/-/_ "
+"seulement."
 
-#: .\apps\users\models.py:39
+#: .\apps\users\models.py:51
 msgid "email address"
 msgstr "adresse e‑mail"
 
-#: .\apps\users\models.py:45
+#: .\apps\users\models.py:57
 msgid "first name"
 msgstr "prénom"
 
-#: .\apps\users\models.py:46
+#: .\apps\users\models.py:58
 msgid "last name"
 msgstr "nom de famille"
 
-#: .\apps\users\models.py:48
+#: .\apps\users\models.py:60
 msgid "avatar"
 msgstr "avatar"
 
-#: .\apps\users\models.py:52
+#: .\apps\users\models.py:64
 msgid "Upload a profile picture."
 msgstr "Téléchargez une photo de profil."
 
-#: .\apps\users\models.py:55
+#: .\apps\users\models.py:67
 msgid "active"
 msgstr "actif"
 
-#: .\apps\users\models.py:58
+#: .\apps\users\models.py:70
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
-msgstr "Indique si cet utilisateur doit être considéré comme actif. Décochez ceci au lieu de supprimer le compte."
+msgstr ""
+"Indique si cet utilisateur doit être considéré comme actif. Décochez ceci au "
+"lieu de supprimer le compte."
 
-#: .\apps\users\models.py:63
+#: .\apps\users\models.py:75
 msgid "staff status"
 msgstr "statut du personnel"
 
-#: .\apps\users\models.py:65
+#: .\apps\users\models.py:77
 msgid "Designates whether the user can log into the admin site."
 msgstr "Indique si l’utilisateur peut se connecter au site d’administration."
 
-#: .\apps\users\models.py:68
+#: .\apps\users\models.py:80
 msgid "email verified"
 msgstr "e‑mail vérifié"
 
-#: .\apps\users\models.py:70
+#: .\apps\users\models.py:82
 msgid "Designates whether the user has verified their email address."
 msgstr "Indique si l’utilisateur a vérifié son adresse e‑mail."
 
-#: .\apps\users\models.py:72
+#: .\apps\users\models.py:84
 msgid "date joined"
 msgstr "date d’adhésion"
 
-#: .\apps\users\models.py:80
+#: .\apps\users\models.py:92
 msgid "user"
 msgstr "utilisateur"
 
-#: .\apps\users\models.py:81
+#: .\apps\users\models.py:93
 msgid "users"
 msgstr "utilisateurs"
 
@@ -286,7 +322,9 @@ msgstr "E-mail vérifié !"
 #: .\templates\authentication\activation_complete.html:17
 msgid ""
 "Your email address has been verified. You can now log in to your account."
-msgstr "Votre adresse e‑mail a été vérifiée. Vous pouvez maintenant vous connecter à votre compte."
+msgstr ""
+"Votre adresse e‑mail a été vérifiée. Vous pouvez maintenant vous connecter à "
+"votre compte."
 
 #: .\templates\authentication\activation_complete.html:21
 msgid "Sign in now"
@@ -304,15 +342,17 @@ msgstr "Lien invalide"
 msgid ""
 "This activation link is invalid or has expired. Please register again or "
 "contact support."
-msgstr "Ce lien d’activation est invalide ou a expiré. Veuillez vous inscrire à nouveau ou contacter le support."
+msgstr ""
+"Ce lien d’activation est invalide ou a expiré. Veuillez vous inscrire à "
+"nouveau ou contacter le support."
 
 #: .\templates\authentication\activation_invalid.html:22
 msgid "Register again"
 msgstr "Inscrivez-vous de nouveau"
 
 #: .\templates\authentication\activation_invalid.html:26
-#: .\templates\authentication\login.html:4 .\templates\base.html:94
-#: .\templates\base.html:129
+#: .\templates\authentication\login.html:4 .\templates\base.html:108
+#: .\templates\base.html:143
 msgid "Login"
 msgstr "Connexion"
 
@@ -329,7 +369,9 @@ msgstr "Vérifiez votre courrier"
 msgid ""
 "We've sent you an activation link. Please check your inbox and click the "
 "link to verify your email address."
-msgstr "Nous vous avons envoyé un lien d’activation. Veuillez vérifier votre boîte de réception et cliquer sur le lien pour vérifier votre adresse e‑mail."
+msgstr ""
+"Nous vous avons envoyé un lien d’activation. Veuillez vérifier votre boîte "
+"de réception et cliquer sur le lien pour vérifier votre adresse e‑mail."
 
 #: .\templates\authentication\activation_sent.html:22
 msgid "Go to login"
@@ -411,10 +453,13 @@ msgstr "Réinitialisation envoyée"
 msgid ""
 "If an account with that email exists, we've sent instructions to reset your "
 "password. Please check your inbox and spam folder."
-msgstr "Si un compte avec cet e‑mail existe, nous avons envoyé des instructions pour réinitialiser votre mot de passe. Veuillez vérifier votre boîte de réception et le dossier spam."
+msgstr ""
+"Si un compte avec cet e‑mail existe, nous avons envoyé des instructions pour "
+"réinitialiser votre mot de passe. Veuillez vérifier votre boîte de réception "
+"et le dossier spam."
 
-#: .\templates\authentication\register.html:4 .\templates\base.html:98
-#: .\templates\base.html:130
+#: .\templates\authentication\register.html:4 .\templates\base.html:112
+#: .\templates\base.html:144
 msgid "Register"
 msgstr "S'inscrire"
 
@@ -435,16 +480,16 @@ msgstr "Création du compte…"
 msgid "Already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
-#: .\templates\base.html:82 .\templates\base.html:123
+#: .\templates\base.html:96 .\templates\base.html:137
 #: .\templates\profiles\profile.html:4
 msgid "Profile"
 msgstr "Profil"
 
-#: .\templates\base.html:88 .\templates\base.html:126
+#: .\templates\base.html:102 .\templates\base.html:140
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: .\templates\base.html:181
+#: .\templates\base.html:195
 msgid "Open source & free."
 msgstr "Open source et gratuit."
 
@@ -461,7 +506,9 @@ msgstr "Bonjour"
 msgid ""
 "Thank you for registering. Please click the button below to verify your "
 "email address and activate your account:"
-msgstr "Merci de vous être inscrit. Veuillez cliquer sur le bouton ci‑dessous pour vérifier votre adresse e‑mail et activer votre compte :"
+msgstr ""
+"Merci de vous être inscrit. Veuillez cliquer sur le bouton ci‑dessous pour "
+"vérifier votre adresse e‑mail et activer votre compte :"
 
 #: .\templates\emails\activation_email.html:21
 msgid "Verify Email"
@@ -470,7 +517,8 @@ msgstr "Vérifier l’e‑mail"
 #: .\templates\emails\activation_email.html:26
 #: .\templates\emails\password_reset_email.html:26
 msgid "If the button doesn't work, copy and paste this link into your browser:"
-msgstr "Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :"
+msgstr ""
+"Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :"
 
 #: .\templates\emails\activation_email.html:31
 msgid "This link will expire in 24 hours."
@@ -491,7 +539,9 @@ msgstr "Réinitialisation du mot de passe"
 #: .\templates\emails\password_reset_email.html:17
 msgid ""
 "You requested a password reset. Click the button below to set a new password:"
-msgstr "Vous avez demandé une réinitialisation de mot de passe. Cliquez sur le bouton ci‑dessous pour définir un nouveau mot de passe :"
+msgstr ""
+"Vous avez demandé une réinitialisation de mot de passe. Cliquez sur le "
+"bouton ci‑dessous pour définir un nouveau mot de passe :"
 
 #: .\templates\emails\password_reset_email.html:31
 msgid "This link will expire shortly."
@@ -499,7 +549,8 @@ msgstr "Ce lien expirera bientôt."
 
 #: .\templates\emails\password_reset_email.html:32
 msgid "If you didn't request a password reset, please ignore this email."
-msgstr "Si vous n’avez pas demandé de réinitialisation, veuillez ignorer cet e‑mail."
+msgstr ""
+"Si vous n’avez pas demandé de réinitialisation, veuillez ignorer cet e‑mail."
 
 #: .\templates\emails\password_reset_subject.txt:1
 msgid "Reset your password"

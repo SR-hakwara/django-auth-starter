@@ -229,3 +229,59 @@ def test_password_change_wrong_old_password(client, user):
     assert response.status_code == 200
     user.refresh_from_db()
     assert user.check_password("SecurePass123!")
+
+
+# ---------------------------------------------------------------------------
+# Password complexity enforcement on password change
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_password_change_weak_no_uppercase_rejected(client, user):
+    """Password change should fail when the new password has no uppercase letter."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.post(
+        reverse("profiles:password_change"),
+        {
+            "old_password": "SecurePass123!",
+            "new_password1": "weaknewpass1!",
+            "new_password2": "weaknewpass1!",
+        },
+    )
+    assert response.status_code == 200
+    user.refresh_from_db()
+    assert user.check_password("SecurePass123!")
+
+
+@pytest.mark.django_db
+def test_password_change_weak_no_special_char_rejected(client, user):
+    """Password change should fail when the new password has no special character."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.post(
+        reverse("profiles:password_change"),
+        {
+            "old_password": "SecurePass123!",
+            "new_password1": "WeakNewPass1234",
+            "new_password2": "WeakNewPass1234",
+        },
+    )
+    assert response.status_code == 200
+    user.refresh_from_db()
+    assert user.check_password("SecurePass123!")
+
+
+@pytest.mark.django_db
+def test_password_change_weak_no_digit_rejected(client, user):
+    """Password change should fail when the new password has no digit."""
+    client.login(username=user.username, password="SecurePass123!")
+    response = client.post(
+        reverse("profiles:password_change"),
+        {
+            "old_password": "SecurePass123!",
+            "new_password1": "WeakNewPassword!",
+            "new_password2": "WeakNewPassword!",
+        },
+    )
+    assert response.status_code == 200
+    user.refresh_from_db()
+    assert user.check_password("SecurePass123!")
